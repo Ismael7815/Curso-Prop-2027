@@ -1,0 +1,1740 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Material de estudio</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  /* Paleta de estatus: azul = favorable/correcto, naranja = alerta/incorrecto, morado = crítico/prioridad */
+  --primary: #2563EB;
+  --primary-dark: #1D4ED8;
+  --primary-bg: #EFF6FF;
+  --primary-soft: #DBEAFE;
+  --purple: #7C3AED;
+  --purple-dark: #6D28D9;
+  --purple-bg: #F5F3FF;
+  --purple-soft: #EDE9FE;
+  --orange: #EA580C;
+  --orange-dark: #C2410C;
+  --orange-bg: #FFF7ED;
+  --orange-soft: #FFEDD5;
+  --bg: #F8FAFC;
+  --surface: #FFFFFF;
+  --border: #E2E8F0;
+  --text: #1E293B;
+  --muted: #475569;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 16px;
+  line-height: 1.6;
+}
+button { font-family: inherit; }
+:focus-visible { outline: 3px solid var(--purple); outline-offset: 2px; }
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #1E3A8A 0%, #7C3AED 100%);
+  color: #fff;
+  padding: 48px 24px 36px;
+  text-align: center;
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  margin-bottom: 16px;
+}
+.hero-title { font-size: clamp(26px, 5vw, 42px); font-weight: 800; margin-bottom: 12px; line-height: 1.2; }
+.hero-subtitle { font-size: 17px; opacity: .92; max-width: 680px; margin: 0 auto 24px; }
+.hero-stats { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-bottom: 20px; }
+.stat {
+  display: flex; flex-direction: column; align-items: center;
+  background: rgba(255,255,255,0.16);
+  padding: 12px 22px; border-radius: var(--radius-md); min-width: 96px;
+}
+.stat-num { font-size: 28px; font-weight: 800; line-height: 1; }
+.stat-label { font-size: 14px; opacity: .9; margin-top: 4px; }
+.hero-meta { font-size: 14px; opacity: .88; max-width: 720px; margin: 0 auto; }
+
+/* AVISO */
+.aviso {
+  max-width: 900px; margin: 20px auto 0; padding: 0 20px;
+}
+.aviso-box {
+  background: var(--orange-bg);
+  border: 1px solid var(--orange);
+  border-left: 6px solid var(--orange);
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #7C2D12;
+}
+
+/* PROGRESO */
+.progress-wrap { max-width: 900px; margin: 20px auto 0; padding: 0 20px; }
+.progress-head { display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--muted); margin-bottom: 6px; gap: 12px; flex-wrap: wrap; }
+.progress-head strong { color: var(--text); }
+.progress-bar-container { height: 8px; background: var(--border); border-radius: 100px; overflow: hidden; }
+.progress-bar { height: 100%; background: linear-gradient(90deg, var(--primary), var(--purple)); width: 0%; transition: width .4s ease; }
+.link-btn { background: none; border: none; color: var(--primary-dark); font-size: 14px; text-decoration: underline; cursor: pointer; padding: 6px 4px; min-height: 32px; }
+
+/* TABS */
+.tabs-nav {
+  display: flex; overflow-x: auto;
+  background: var(--surface);
+  border-bottom: 2px solid var(--border);
+  padding: 0 16px; gap: 4px;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: var(--shadow-sm);
+  margin-top: 20px;
+}
+.tab-btn {
+  flex-shrink: 0; padding: 14px 18px; border: none; background: none;
+  color: var(--muted); font-size: 15px; font-weight: 500; cursor: pointer;
+  border-bottom: 3px solid transparent; transition: all .2s; white-space: nowrap; min-height: 48px;
+}
+.tab-btn:hover { color: var(--primary-dark); background: var(--primary-bg); border-radius: 8px 8px 0 0; }
+.tab-btn.active { color: var(--primary-dark); border-bottom-color: var(--primary); font-weight: 700; }
+
+/* MAIN */
+.main-content { max-width: 900px; margin: 0 auto; padding: 28px 20px 80px; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.tab-intro { color: var(--muted); margin-bottom: 20px; font-size: 16px; }
+
+/* GUÍA */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+.chip {
+  display: inline-block; padding: 8px 14px; border-radius: 100px;
+  background: var(--surface); border: 1px solid var(--border);
+  color: var(--primary-dark); font-size: 14px; font-weight: 600; text-decoration: none;
+}
+.chip:hover { background: var(--primary-bg); border-color: var(--primary); }
+
+.section-card {
+  background: var(--surface); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm); border: 1px solid var(--border);
+  padding: 28px; margin-bottom: 20px; scroll-margin-top: calc(var(--nav-h, 52px) + 16px);
+}
+.section-title {
+  font-size: 20px; font-weight: 700; color: var(--primary-dark);
+  margin-bottom: 8px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.35;
+}
+.section-title .num { flex-shrink: 0; }
+.section-sub { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid var(--border); }
+.badge { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 13px; font-weight: 600; }
+.badge-exam { background: var(--purple-soft); color: #5B21B6; }
+.badge-error { background: var(--orange-soft); color: #9A3412; }
+.badge-page { background: var(--primary-soft); color: #1E40AF; }
+
+.block { margin-bottom: 16px; }
+.block-label { font-size: 13px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.block ul { margin-left: 22px; }
+.block li { margin-bottom: 6px; }
+.example-box { background: var(--primary-bg); border-left: 4px solid var(--primary); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 16px; }
+.trick-box { background: var(--purple-bg); border-left: 4px solid var(--purple); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; padding: 12px 16px; }
+.label-critical { background: var(--purple-bg); border: 1px solid var(--purple); border-radius: var(--radius-sm); padding: 10px 14px; margin: 12px 0; font-size: 15px; }
+.label-error { background: var(--orange-bg); border: 1px solid var(--orange); border-radius: var(--radius-sm); padding: 10px 14px; margin: 12px 0; font-size: 15px; }
+.kw { display: flex; flex-wrap: wrap; gap: 6px; }
+.keyword-tag { display: inline-block; background: var(--purple-dark); color: #fff; padding: 3px 12px; border-radius: 100px; font-size: 14px; font-weight: 600; }
+.note-source { margin-top: 24px; font-size: 14px; color: var(--muted); background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-sm); padding: 12px 16px; }
+
+/* FLASHCARDS */
+.flashcard-nav { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+.flashcard-counter { font-size: 15px; color: var(--muted); font-weight: 600; }
+.flashcard-progress-text { font-size: 15px; color: var(--primary-dark); font-weight: 700; }
+.fc-tools { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.flashcard-scene { perspective: 1000px; cursor: pointer; margin-bottom: 20px; border-radius: var(--radius-lg); }
+.flashcard-inner { display: grid; transform-style: preserve-3d; transition: transform .5s cubic-bezier(.4,0,.2,1); }
+.flashcard-scene.flipped .flashcard-inner { transform: rotateY(180deg); }
+.flashcard-front, .flashcard-back {
+  grid-area: 1 / 1; min-height: 240px; border-radius: var(--radius-lg); padding: 28px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.flashcard-front { background: linear-gradient(135deg, var(--primary), var(--purple)); color: #fff; box-shadow: var(--shadow-lg); }
+.flashcard-back { background: var(--surface); border: 3px solid var(--primary); color: var(--text); transform: rotateY(180deg); box-shadow: var(--shadow-lg); }
+.flashcard-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; opacity: .85; text-transform: uppercase; margin-bottom: 12px; }
+.flashcard-text { font-size: 19px; font-weight: 600; line-height: 1.5; }
+.flashcard-back .flashcard-text { font-size: 17px; font-weight: 500; }
+.flashcard-hint { font-size: 14px; margin-top: 14px; opacity: .8; }
+.done-mark { display: none; margin-top: 10px; font-size: 14px; font-weight: 700; }
+.flashcard-scene.is-done .flashcard-back .done-mark { display: block; color: var(--primary-dark); }
+.flashcard-controls { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+.empty { text-align: center; padding: 40px 16px; background: var(--surface); border: 1px dashed var(--border); border-radius: var(--radius-lg); color: var(--muted); }
+
+/* BOTONES */
+.btn {
+  padding: 10px 20px; border-radius: var(--radius-sm); border: 1px solid transparent;
+  font-size: 15px; font-weight: 600; cursor: pointer; transition: all .2s;
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+.btn-purple { background: var(--purple-dark); color: #fff; }
+.btn-purple:hover { background: #5B21B6; transform: translateY(-1px); }
+.btn-secondary { background: var(--surface); color: var(--text); border-color: var(--border); }
+.btn-secondary:hover { background: var(--primary-bg); border-color: var(--primary); }
+.btn-toggle[aria-pressed="true"] { background: var(--primary-soft); border-color: var(--primary); color: #1E40AF; }
+
+/* EXAMEN */
+.exam-bar {
+  position: sticky; top: var(--nav-h, 52px); z-index: 50;
+  background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md);
+  padding: 10px 16px; margin-bottom: 20px; display: flex; gap: 16px; align-items: center; justify-content: space-between; flex-wrap: wrap;
+  box-shadow: var(--shadow-sm); font-size: 15px;
+}
+.question-card { background: var(--surface); border-radius: var(--radius-lg); border: 2px solid var(--border); padding: 24px; margin-bottom: 20px; transition: border-color .2s, background .2s; }
+.question-card.correct { border-color: var(--primary); background: var(--primary-bg); }
+.question-card.incorrect { border-color: var(--orange); background: var(--orange-bg); }
+.question-num { font-size: 13px; font-weight: 700; color: var(--purple-dark); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+.question-text { font-size: 17px; font-weight: 600; margin-bottom: 16px; line-height: 1.5; }
+.options { display: flex; flex-direction: column; gap: 10px; }
+.option {
+  display: flex; align-items: flex-start; gap: 12px; padding: 12px 16px; text-align: left; width: 100%;
+  border-radius: var(--radius-sm); border: 2px solid var(--border); background: var(--surface);
+  cursor: pointer; transition: all .2s; font-size: 16px; color: var(--text); min-height: 48px;
+}
+.option:hover:not(:disabled) { border-color: #94A3B8; background: #F1F5F9; }
+.option:disabled { cursor: default; }
+.option.correct-answer { border-color: var(--primary); background: var(--primary-soft); }
+.option.wrong-answer { border-color: var(--orange); background: var(--orange-soft); }
+.option-letter {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--bg); border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex-shrink: 0;
+}
+.option-text { flex: 1; }
+.option-mark { font-size: 14px; font-weight: 700; white-space: nowrap; }
+.correct-answer .option-mark { color: #1E40AF; }
+.wrong-answer .option-mark { color: #9A3412; }
+.explanation {
+  margin-top: 14px; padding: 12px 16px; background: var(--surface); border-left: 4px solid var(--primary);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0; font-size: 15px; color: var(--muted); display: none;
+}
+.explanation.visible { display: block; }
+.explanation strong.verdict { display: block; color: var(--text); margin-bottom: 2px; }
+.question-card.incorrect .explanation { border-left-color: var(--orange); }
+.score-display { text-align: center; padding: 24px; background: var(--surface); border-radius: var(--radius-lg); border: 2px solid var(--border); margin-top: 24px; display: none; }
+.score-display.visible { display: block; }
+.score-number { font-size: 48px; font-weight: 900; color: var(--primary-dark); line-height: 1.1; }
+.score-label { font-size: 17px; color: var(--muted); margin-top: 6px; }
+.score-msg { font-weight: 700; margin-top: 10px; font-size: 18px; }
+.score-msg.hi { color: var(--purple-dark); }
+.score-msg.mid { color: var(--primary-dark); }
+.score-msg.lo { color: var(--orange-dark); }
+.score-fails { margin-top: 8px; font-size: 15px; color: var(--muted); }
+
+/* MAPA MENTAL */
+.mapa-container { padding: 8px 0; }
+.mapa-root-wrap { text-align: center; margin-bottom: 8px; }
+.mapa-node-root {
+  display: inline-block; background: linear-gradient(135deg, var(--primary), var(--purple)); color: #fff;
+  padding: 16px 28px; border-radius: var(--radius-md); font-weight: 800; font-size: 20px; text-align: center;
+}
+.mapa-stem { width: 3px; height: 24px; background: var(--border); margin: 0 auto; }
+.mapa-branches { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+.mapa-branch { border-radius: var(--radius-md); border: 2px solid var(--border); overflow: hidden; background: var(--surface); }
+.mapa-branch-header { padding: 12px 16px; font-weight: 700; font-size: 16px; color: #fff; }
+.mapa-branch-body { padding: 10px 16px 12px; }
+.mapa-leaf { padding: 7px 0 7px 14px; border-bottom: 1px solid var(--border); font-size: 15px; position: relative; }
+.mapa-leaf::before { content: ''; position: absolute; left: 0; top: 16px; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+.mapa-leaf:last-child { border-bottom: none; }
+.branch-color-1 .mapa-branch-header { background: #1D4ED8; } .branch-color-1 { border-color: #BFDBFE; }
+.branch-color-2 .mapa-branch-header { background: #6D28D9; } .branch-color-2 { border-color: #DDD6FE; }
+.branch-color-3 .mapa-branch-header { background: #0E7490; } .branch-color-3 { border-color: #A5F3FC; }
+.branch-color-4 .mapa-branch-header { background: #C2410C; } .branch-color-4 { border-color: #FED7AA; }
+.branch-color-5 .mapa-branch-header { background: #4338CA; } .branch-color-5 { border-color: #C7D2FE; }
+.branch-color-6 .mapa-branch-header { background: #475569; } .branch-color-6 { border-color: #CBD5E1; }
+
+/* TABLAS */
+.table-wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); margin-bottom: 8px; }
+.resumen-table { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 620px; }
+.resumen-table th { background: var(--primary-dark); color: #fff; padding: 12px 16px; text-align: left; font-weight: 700; }
+.resumen-table td { padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+.resumen-table tr:hover td { background: #F8FAFF; }
+.resumen-table td.antes { color: var(--muted); }
+.resumen-table td.despues { font-weight: 600; }
+.h2 { font-size: 20px; font-weight: 700; color: var(--primary-dark); margin: 28px 0 12px; }
+.h2:first-child { margin-top: 0; }
+.table-note { font-size: 14px; color: var(--muted); margin-bottom: 8px; }
+
+/* RÁPIDO */
+.rapido-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 16px; }
+.rapido-card { background: var(--surface); border-radius: var(--radius-md); border: 1px solid var(--border); padding: 20px; }
+.rapido-card-title { font-weight: 700; font-size: 17px; margin-bottom: 12px; }
+.rapido-card ul { margin-left: 20px; }
+.rapido-card li { margin-bottom: 6px; }
+.rapido-card.k-purple { border-top: 5px solid var(--purple); }
+.rapido-card.k-blue { border-top: 5px solid var(--primary); }
+.rapido-card.k-orange { border-top: 5px solid var(--orange); }
+.rapido-card.k-neutral { border-top: 5px solid #94A3B8; }
+.plan { list-style: none; margin: 0; }
+.plan li { display: flex; gap: 14px; padding: 12px 16px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); margin-bottom: 8px; align-items: baseline; }
+.plan .min { flex-shrink: 0; min-width: 92px; font-weight: 800; color: var(--purple-dark); }
+.plan-note { margin-top: 12px; }
+
+footer { text-align: center; color: var(--muted); font-size: 14px; padding: 8px 20px 40px; max-width: 900px; margin: 0 auto; }
+
+@media (max-width: 600px) {
+  .hero { padding: 32px 16px 28px; }
+  .main-content { padding: 20px 12px 60px; }
+  .section-card { padding: 20px 16px; }
+  .question-card { padding: 18px 14px; }
+  .flashcard-front, .flashcard-back { padding: 20px 16px; min-height: 260px; }
+  .flashcard-text { font-size: 17px; }
+  .flashcard-back .flashcard-text { font-size: 16px; }
+  .tabs-nav { padding: 0 8px; }
+  .tab-btn { padding: 12px 12px; font-size: 14px; }
+  .plan li { flex-direction: column; gap: 2px; }
+  .aviso, .progress-wrap { padding: 0 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .flashcard-inner, .progress-bar { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-badge">📖 Material de estudio</div>
+  <h1 class="hero-title" id="heroTitle"></h1>
+  <p class="hero-subtitle" id="heroSub"></p>
+  <div class="hero-stats" id="heroStats"></div>
+  <p class="hero-meta" id="heroMeta"></p>
+</header>
+
+<div class="aviso" id="avisoWrap"></div>
+
+<div class="progress-wrap">
+  <div class="progress-head">
+    <span>Tu progreso global: <strong id="progressText">0%</strong></span>
+    <button class="link-btn" id="resetAll" type="button">Reiniciar todo el progreso</button>
+  </div>
+  <div class="progress-bar-container" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progressBox">
+    <div class="progress-bar" id="globalProgress"></div>
+  </div>
+</div>
+
+<nav class="tabs-nav" id="tabsNav" role="tablist" aria-label="Secciones del material">
+  <button class="tab-btn active" role="tab" aria-selected="true" data-tab="guia">📚 Guía de Estudio</button>
+  <button class="tab-btn" role="tab" aria-selected="false" data-tab="flashcards">🃏 Flashcards</button>
+  <button class="tab-btn" role="tab" aria-selected="false" data-tab="examen">✏️ Simulacro</button>
+  <button class="tab-btn" role="tab" aria-selected="false" data-tab="mapa">🧠 Mapa Mental</button>
+  <button class="tab-btn" role="tab" aria-selected="false" data-tab="resumen">📋 Resumen</button>
+  <button class="tab-btn" role="tab" aria-selected="false" data-tab="rapido">⚡ Estudio Rápido</button>
+</nav>
+
+<main class="main-content">
+  <section class="tab-content active" id="tab-guia" role="tabpanel"></section>
+  <section class="tab-content" id="tab-flashcards" role="tabpanel"></section>
+  <section class="tab-content" id="tab-examen" role="tabpanel"></section>
+  <section class="tab-content" id="tab-mapa" role="tabpanel"></section>
+  <section class="tab-content" id="tab-resumen" role="tabpanel"></section>
+  <section class="tab-content" id="tab-rapido" role="tabpanel"></section>
+</main>
+
+<footer id="footer"></footer>
+
+<script>
+/* =====================================================================
+   DATOS DEL MATERIAL  (para reutilizar la plantilla, edita solo este bloque)
+   Estructura:
+   meta:      { id, titulo, subtitulo, fuente, fecha, aviso, notaFuente }
+   secciones: [{ id, icono, titulo, pagina, queEs, paraQue, elementos[], ejemplo,
+                 palabras[], truco, critico (opcional ⭐), error (opcional 🚨) }]
+   flashcards:[{ q, a }]                       (recomendado: 20 a 40)
+   preguntas: [{ q, opciones[4], correcta (0-3), explicacion }]   (15 a 20)
+   mapa:      { raiz, ramas: [{ titulo, hojas[] }] }
+   resumen:   [{ seccion, contiene, sirve, clave }]
+   cifras:    [{ concepto, antes, despues }]
+   rapido:    { tarjetas: [{ titulo, items[] }], plan30: [{ min, accion }], nota }
+   Puedes usar **negritas** dentro de cualquier texto.
+   ===================================================================== */
+const DATA = {
+ "meta": {
+  "id": "reforma-fiscal-2027",
+  "titulo": "Propuestas fiscales 2027",
+  "subtitulo": "ISR de personas morales, pérdidas fiscales, intereses, RESICO, IVA y estímulos: material de estudio basado en las notas del despacho.",
+  "fuente": "ESCRITO_DATOS_FISCALES.pdf (5 páginas; las propuestas citan cgpe_2027.pdf)",
+  "fecha": "26/septiembre/2026",
+  "aviso": "Todo lo que aparece aquí son PROPUESTAS (iniciativa), no ley vigente. Las notas mismas indican que hay que esperar el articulado de la iniciativa de LISR y decidir hasta el decreto. Los ejemplos numéricos marcados como «ilustrativo» son cifras inventadas para practicar; no provienen del documento.",
+  "notaFuente": "La página 5 del PDF inicia a media frase («…para una empresa por debajo de 50 mdp, este paquete es casi puro beneficio»), por lo que parece faltar el inicio de ese bloque. Esta sección (pp. 4-5) tiene un estilo distinto al resto de las notas; revisa si falta una página. Abreviatura usada: mdp = millones de pesos."
+ },
+ "secciones": [
+  {
+   "id": "s1",
+   "icono": "🧭",
+   "titulo": "Panorama: qué se propone y por qué importa",
+   "pagina": "pp. 1, 4",
+   "critico": "Regla de oro de todo el material: esto es iniciativa. Se preparan simulaciones ahora, pero se decide hasta que exista el decreto.",
+   "queEs": "Un paquete de propuestas fiscales para 2027 que las notas del despacho toman del documento cgpe_2027.pdf. Toca principalmente el ISR de personas morales, las pérdidas fiscales, los intereses, RESICO, el IVA y varios estímulos. También hay cambios en derechos.",
+   "paraQue": "Anticipar qué clientes se verán afectados y preparar corridas y simulaciones con tiempo. Las notas advierten que la magnitud recaudatoria confirma que «no son cambios cosméticos».",
+   "elementos": [
+    "**Meta recaudatoria:** Hacienda proyecta ingresos tributarios por **$6.264 billones**, equivalentes al **15.9% del PIB**, un incremento real de **5.9%** frente al cierre estimado de 2026.",
+    "**Dos grandes bloques:** restricciones a personas morales (deducciones, pérdidas, intereses, pagos al extranjero, CUFIN/CUCA, ROGS) y oportunidades (RESICO, IVA 7%, repatriación, Plan México, etc.).",
+    "**El punto que más análisis merece:** el mecanismo de deducciones 96.67%/99% combinado con el límite de pérdidas al 50%. Según cómo se redacte la iniciativa de LISR, podría cambiar sustancialmente el ISR efectivo de muchas personas morales.",
+    "**Falta el articulado:** varias propuestas se describen solo a nivel de idea; los detalles dependen del texto de la iniciativa."
+   ],
+   "ejemplo": "Un cliente pregunta: «¿ya me aplica el límite del 20% a intereses?». Respuesta correcta: todavía no, es una propuesta. Lo que sí se hace hoy es preparar la corrida con sus números de 2026 para saber cuánto le pegaría si se aprueba.",
+   "palabras": [
+    "Iniciativa",
+    "cgpe_2027.pdf",
+    "$6.264 billones",
+    "15.9% del PIB",
+    "+5.9% real"
+   ],
+   "truco": "«Billón» en México es un millón de millones: $6.264 billones = 6.264 millones de millones de pesos. Y recuerda el par 15.9 / 5.9: primero el % del PIB, luego el crecimiento real."
+  },
+  {
+   "id": "s2",
+   "icono": "🚧",
+   "titulo": "Nuevo límite general a las deducciones de personas morales",
+   "pagina": "pp. 1, 4",
+   "critico": "Las notas lo consideran «probablemente el cambio más importante» y lo ubican en el nivel de impacto muy alto.",
+   "error": "No des cifras de impacto al cliente todavía: qué se topa exactamente y a qué porcentaje depende de la redacción del articulado. El propio texto dice que hay que estudiarlo «con muchísimo cuidado» cuando exista.",
+   "queEs": "Un mecanismo para empresas con utilidad. Según el texto: cuando las deducciones sean iguales o superiores al 96.67% de los ingresos acumulables, operaría ese límite; cuando sean inferiores a ese umbral, las deducciones autorizadas aplicables se establecerían al 99%.",
+   "paraQue": "Evitar que empresas con utilidad reduzcan prácticamente toda su base gravable mediante deducciones. En términos prácticos, podría generar ISR aun en empresas que hoy contable o fiscalmente logran esa reducción.",
+   "elementos": [
+    "**Umbral:** 96.67% de los ingresos acumulables.",
+    "**Si las deducciones son iguales o superiores al umbral:** opera el límite.",
+    "**Si son inferiores al umbral:** las deducciones autorizadas aplicables se establecerían al 99%.",
+    "**Dirigido a:** empresas con utilidad.",
+    "**Efecto:** posible ISR en empresas que hoy bajan casi toda su base con deducciones."
+   ],
+   "ejemplo": "Piensa en una empresa comercial con utilidad que cada año cierra con resultado fiscal casi en cero porque tiene deducciones abundantes. Con este mecanismo podría terminar pagando ISR de todos modos. No se calcula un caso numérico aquí porque la redacción del texto es ambigua y falta el articulado.",
+   "palabras": [
+    "96.67%",
+    "99%",
+    "Ingresos acumulables",
+    "Deducciones autorizadas",
+    "Personas morales"
+   ],
+   "truco": "«96.67 dispara, 99 fija»: el 96.67% es el umbral que activa el límite y el 99% es el porcentaje que el texto menciona para las deducciones cuando se está por debajo."
+  },
+  {
+   "id": "s3",
+   "icono": "📉",
+   "titulo": "Limitación de pérdidas fiscales: 50% y plazo de 20 años",
+   "pagina": "pp. 1, 5",
+   "critico": "Segundo pilar del «impacto muy alto». Combinado con el límite de deducciones es el punto que las notas piden analizar más a fondo.",
+   "queEs": "Las pérdidas fiscales de ejercicios anteriores solo podrían disminuir hasta el 50% de la utilidad fiscal del ejercicio. A cambio, el plazo para amortizarlas aumentaría de 10 a 20 años.",
+   "paraQue": "Recaudar aunque la empresa tenga pérdidas acumuladas. La compensación es que las pérdidas tienen más tiempo para usarse, lo que reduce el riesgo de que caduquen.",
+   "elementos": [
+    "**Tope anual:** las pérdidas de ejercicios anteriores solo bajan hasta el 50% de la utilidad fiscal del ejercicio.",
+    "**Plazo:** de 10 a 20 años para amortizarlas.",
+    "**Consecuencia:** aunque una empresa tenga pérdidas suficientes para eliminar su utilidad fiscal de 2027, aparentemente ya no podría llevar la utilidad a cero mediante su amortización.",
+    "**Lado bueno:** para startups o empresas en etapa de inversión con pérdidas largas, duplicar el plazo reduce el riesgo de que caduquen. Es el lado favorable de una medida que castiga a los grandes."
+   ],
+   "ejemplo": "Ilustrativo: utilidad fiscal 2027 = $1,000,000 y pérdidas acumuladas = $3,000,000. Hoy podrías amortizar $1,000,000 y quedar en cero. Con la propuesta, máximo $500,000 (50%): la base gravable sería $500,000 y quedarían $2,500,000 de pérdidas para usar dentro del plazo de 20 años.",
+   "palabras": [
+    "50% de la utilidad fiscal",
+    "10 a 20 años",
+    "Amortización",
+    "Pérdidas de ejercicios anteriores"
+   ],
+   "truco": "«Mitad y doble»: solo la mitad de la utilidad se puede compensar, pero el plazo se duplica (10 → 20 años)."
+  },
+  {
+   "id": "s4",
+   "icono": "🏦",
+   "titulo": "Intereses: la deducibilidad baja del 30% al 20%",
+   "pagina": "p. 1",
+   "critico": "Tercer pilar del «impacto muy alto». Para grupos apalancados, inmobiliarias y desarrolladoras puede ser uno de los cambios de mayor impacto.",
+   "queEs": "La deducción de intereses netos, hoy referenciada al 30% de la utilidad fiscal ajustada, se reduciría al 20%. El interés no deducido podría seguir aprovechándose durante los 10 ejercicios siguientes.",
+   "paraQue": "Limitar la deducción financiera. Afecta sobre todo a grupos empresariales altamente apalancados, inmobiliarias, desarrolladoras y empresas que financian inversiones con deuda.",
+   "elementos": [
+    "**Base:** utilidad fiscal ajustada.",
+    "**Límite:** baja de 30% a 20% para la deducción de intereses netos.",
+    "**Arrastre:** el interés no deducido se puede aprovechar durante los 10 ejercicios siguientes.",
+    "**Quién lo resiente:** empresas con mucha deuda: inmobiliarias, desarrolladoras, grupos apalancados."
+   ],
+   "ejemplo": "Ilustrativo: utilidad fiscal ajustada = $10,000,000 e intereses netos = $2,800,000. Con el límite actual (30% = $3,000,000) se deduce todo. Con el 20% ($2,000,000) se deducen $2,000,000 y $800,000 quedan pendientes para los 10 ejercicios siguientes.",
+   "palabras": [
+    "30% → 20%",
+    "Utilidad fiscal ajustada",
+    "Intereses netos",
+    "10 ejercicios siguientes"
+   ],
+   "truco": "«Tres a dos»: del 30 al 20. Y no confundas los plazos: 10 ejercicios para el interés no deducido; 20 años para las pérdidas."
+  },
+  {
+   "id": "s5",
+   "icono": "🌐",
+   "titulo": "Pagos al extranjero: se endurece el momento de deducción",
+   "pagina": "pp. 1, 5",
+   "queEs": "Los pagos realizados al extranjero se reconocerían como deducibles hasta el ejercicio en que efectivamente se preste el servicio y se efectúe el pago. Para anticipos que comprendan más de un ejercicio, la deducción procedería cuando se use o goce efectivamente el bien arrendado.",
+   "paraQue": "Impedir deducciones anticipadas de operaciones que eventualmente podrían no realizarse (esa es la justificación expresa).",
+   "elementos": [
+    "**Regla general:** deducible hasta que se preste el servicio Y se efectúe el pago.",
+    "**Anticipos de más de un ejercicio:** la deducción llega cuando se usa o goza efectivamente el bien arrendado.",
+    "**Justificación expresa:** evitar deducciones anticipadas de operaciones que podrían no realizarse.",
+    "**Acción sugerida por el despacho:** preparar una lista de cierre 2026 para clientes con proveedores extranjeros."
+   ],
+   "ejemplo": "Ilustrativo: en 2027 un cliente paga por adelantado $3,600,000 por tres años de arrendamiento a un proveedor extranjero. Con la regla propuesta no deduciría todo al pagar; la deducción llegaría conforme se use o goce el bien (por ejemplo, unos $1,200,000 por ejercicio). La mecánica exacta dependerá del articulado.",
+   "palabras": [
+    "Servicio prestado + pago efectuado",
+    "Uso o goce",
+    "Anticipos",
+    "Proveedores extranjeros"
+   ],
+   "truco": "«Servicio + pago = deducción. Anticipo = espera al uso»."
+  },
+  {
+   "id": "s6",
+   "icono": "🧮",
+   "titulo": "CUFIN y CUCA: cuentas que afectan dividendos y reestructuras",
+   "pagina": "pp. 1-2",
+   "error": "No confundas las dos cuentas: la CUFIN se ajusta por gastos que NO cumplieron requisitos de deducibilidad; la CUCA se ajusta en capitalizaciones de deuda (intereses devengados no pagados e IVA).",
+   "queEs": "CUFIN (Cuenta de Utilidad Fiscal Neta): para determinarla se disminuirían de la UFIN los gastos que no hayan cumplido los requisitos fiscales para ser deducibles. CUCA (Cuenta de Capital de Aportación): cuando exista capitalización de deuda, no integrarían la CUCA los intereses devengados pero no pagados, ni el IVA correspondiente a esos pasivos.",
+   "paraQue": "La CUFIN merece atención porque puede terminar afectando la distribución de dividendos y el cálculo del ISR corporativo asociado. La CUCA es importante para reestructuraciones corporativas y capitalizaciones de deuda.",
+   "elementos": [
+    "**CUFIN:** de la UFIN se restan los gastos que no cumplieron los requisitos fiscales para ser deducibles.",
+    "**Impacto de CUFIN:** posible efecto en dividendos y en el ISR corporativo asociado.",
+    "**CUCA:** en capitalización de deuda no se integran intereses devengados pero no pagados.",
+    "**CUCA (IVA):** tampoco se integra el IVA correspondiente a esos pasivos.",
+    "**Nivel de alerta:** impacto alto para determinados clientes."
+   ],
+   "ejemplo": "Ilustrativo: una empresa capitaliza un pasivo con su accionista que incluye intereses devengados y no pagados. Con la propuesta, esos intereses y el IVA correspondiente ya no sumarían a la CUCA. Y una empresa con gastos que no cumplieron requisitos fiscales vería reducida su CUFIN, lo que podría cambiar cómo conviene distribuir dividendos.",
+   "palabras": [
+    "CUFIN",
+    "UFIN",
+    "CUCA",
+    "Capitalización de pasivos",
+    "Dividendos"
+   ],
+   "truco": "CUFIN = utilidades: se le restan los gastos mal soportados. CUCA = aportaciones: se le quitan los intereses no pagados y el IVA. «U de utilidad, C de capital»."
+  },
+  {
+   "id": "s7",
+   "icono": "🔚",
+   "titulo": "ROGS desaparece y el estímulo carretero se focaliza",
+   "pagina": "p. 2",
+   "queEs": "ROGS (Régimen Opcional para Grupos de Sociedades): se propone eliminarlo y realizar el cobro íntegro del impuesto diferido. Estímulo de autopistas de cuota: el crédito fiscal de hasta 50% del gasto en peaje quedaría dirigido a contribuyentes dedicados exclusivamente al autotransporte terrestre público o privado de carga, pasaje o turismo, con ingresos anuales para ISR menores a $250 millones.",
+   "paraQue": "Hacienda argumenta que el esquema transitorio proveniente de las medidas de 2013 ya cumplió su objetivo. El estímulo carretero se restringe para que lo use solo el sector al que realmente se dirige.",
+   "elementos": [
+    "**ROGS:** se elimina y se cobra íntegro el impuesto diferido.",
+    "**Argumento oficial:** el esquema transitorio de las medidas de 2013 ya cumplió su objetivo.",
+    "**Estímulo carretero:** crédito de hasta 50% del gasto en cuotas de peaje.",
+    "**Quién lo conserva:** dedicados exclusivamente al autotransporte terrestre (público o privado) de carga, pasaje o turismo.",
+    "**Tope de ingresos:** menos de $250 millones anuales para ISR.",
+    "**Nivel de alerta:** impacto alto para determinados clientes."
+   ],
+   "ejemplo": "Ilustrativo: una transportista de carga con ingresos ISR de $180 millones y dedicada solo al autotransporte conserva el estímulo. Una con $300 millones lo pierde. Y una con $150 millones que además tiene otra actividad tampoco califica, porque el texto pide dedicarse «exclusivamente» al autotransporte.",
+   "palabras": [
+    "ROGS",
+    "Impuesto diferido",
+    "Medidas de 2013",
+    "Peaje 50%",
+    "$250 millones"
+   ],
+   "truco": "ROGS: «se acabó el diferimiento». Carretero: «solo transportistas y menos de 250»."
+  },
+  {
+   "id": "s8",
+   "icono": "🚀",
+   "titulo": "RESICO ampliado: personas físicas y morales",
+   "pagina": "pp. 2, 5",
+   "critico": "Las notas llaman a RESICO PM opcional «la joya del paquete» y lo ponen primero en la lista de oportunidades. Para una empresa por debajo de 50 mdp, el paquete es casi puro beneficio.",
+   "error": "Fraccionar una empresa para quedar bajo 50 mdp es justo lo que el SAT buscará atacar con razón de negocios (art. 5-A CFF). La ventaja se aprovecha creciendo dentro del umbral, no partiéndose.",
+   "queEs": "RESICO se ampliaría considerablemente. Personas físicas: el límite sube de $3.5 millones a $5 millones. Personas morales: de $35 millones a $50 millones, y para estas últimas el régimen sería opcional. Además, aumentarían las tasas de depreciación de activos fijos.",
+   "paraQue": "Abre una ventana de planeación: habrá clientes actualmente fuera de RESICO que podrían volver a calificar. Para las personas morales, tributar sobre flujo de efectivo (cobrado menos pagado) y no sobre devengado significa que las cuentas por cobrar dejan de generar ISR hasta que se cobran.",
+   "elementos": [
+    "**RESICO PF:** hasta $5 mdp, con tasas de 1% a 2.5% (la más baja del sistema).",
+    "**Exclusión que sigue:** quien sea socio o accionista de una persona moral (art. 113-E).",
+    "**RESICO PM:** hasta $50 mdp y opcional (puedes entrar o quedarte en Título II según convenga).",
+    "**Base:** flujo de efectivo (cobrado menos pagado), no devengado.",
+    "**Deducción de inversiones (según las notas):** mobiliario y equipo 50%, inmuebles 26%, preoperativos 20%.",
+    "**Reingreso:** quien fue expulsado por omisiones puede regresar al ejercicio siguiente tras regularizarse."
+   ],
+   "ejemplo": "Ilustrativo: una persona moral con ingresos de $42 mdp hoy queda fuera de RESICO PM (límite de $35 mdp). Con la propuesta podría calificar, y si planea comprar equipo por $2,000,000, con la deducción del 50% recuperaría $1,000,000 en un solo ejercicio (las notas dicen que ejecutar la inversión bajo RESICO PM en 2027 «recupera la mitad del equipo en un solo ejercicio»).",
+   "palabras": [
+    "RESICO PF $5 mdp",
+    "RESICO PM $50 mdp opcional",
+    "Flujo de efectivo",
+    "Título II",
+    "Art. 113-E",
+    "Reingreso"
+   ],
+   "truco": "Los dos límites suben en la misma proporción: 3.5 → 5 y 35 → 50 (aprox. ×1.43 en ambos casos). Es una regla mnemotécnica derivada, no una cifra del documento."
+  },
+  {
+   "id": "s9",
+   "icono": "🧾",
+   "titulo": "IVA simplificado del 7% para RESICO",
+   "pagina": "pp. 2, 5",
+   "error": "No lo vendas como «siempre conviene». Para negocios con compras, inventarios o inversión considerable puede resultar desfavorable, y el IEPS y algunas compras sin IVA cambian la ecuación caso por caso.",
+   "queEs": "Un esquema opcional para contribuyentes del régimen: determinan el IVA mensual aplicando directamente 7% al valor total de los actos o actividades gravados efectivamente cobrados, pero sin derecho a acreditar el IVA trasladado en compras e inversiones.",
+   "paraQue": "Es atractivo para actividades con poco IVA acreditable (despachos, consultoría, honorarios, negocios cuyo costo principal es nómina): pasan de pagar casi 16% a 7% sobre lo cobrado, hasta 9 puntos de margen. Para negocios con compras, inventarios o inversión considerable podría ser desfavorable.",
+   "elementos": [
+    "**Tasa:** 7% directo sobre el valor total de lo efectivamente cobrado.",
+    "**Sin acreditamiento:** no se acredita el IVA trasladado en compras e inversiones.",
+    "**Conviene a:** servicios, honorarios, consultoría, negocios con nómina como costo principal.",
+    "**No suele convenir a:** bares o comercio con inventarios, aunque vale la corrida.",
+    "**Método del despacho:** simulación cliente por cliente contra el IVA acreditable real de los últimos 12 meses."
+   ],
+   "ejemplo": "Ilustrativo: un despacho cobra $1,000,000 en el mes. Con el esquema del 7% paga $70,000. En el régimen general, el IVA trasladado sería $160,000 menos el acreditable: si su IVA acreditable fuera $30,000 pagaría $130,000 (le conviene el 7%); si fuera $120,000 pagaría $40,000 (le conviene el general).",
+   "palabras": [
+    "7% sobre lo cobrado",
+    "Sin acreditamiento",
+    "IVA acreditable",
+    "Simulación cliente por cliente",
+    "9 puntos"
+   ],
+   "truco": "Regla derivada de aritmética simple (no está en el documento): 16 − 7 = 9. Si el IVA acreditable es menor al 9% del valor cobrado, el 7% gana; si es mayor, gana el régimen general. Siempre confirma con la corrida de 12 meses."
+  },
+  {
+   "id": "s10",
+   "icono": "🎁",
+   "titulo": "Otros estímulos: sector primario, Plan México, retención, repatriación, libros y OPI",
+   "pagina": "pp. 2-3, 5",
+   "error": "Exención no es lo mismo que tasa 0%: con la tasa 0% puede haber acreditamiento y recuperación del IVA relacionado; con la exención no. Por eso el cambio para editoriales y librerías elegibles puede ser un beneficio considerable.",
+   "queEs": "Un conjunto de medidas de menor tamaño pero útiles: mayor exención para el sector primario, incorporación de Plan México y los Polos de Desarrollo a la LISR, menor retención de ISR por intereses, un programa de repatriación de capitales, tasa 0% de IVA para libros, periódicos y revistas, y un estímulo para Ofertas Públicas Iniciales.",
+   "paraQue": "Dar certeza jurídica a inversiones, mejorar flujo de tesorería y ofrecer salidas fiscales atractivas a perfiles específicos (agricultores, editoriales, quien tenga recursos fuera, quien piense salir a bolsa).",
+   "elementos": [
+    "**Sector primario:** exención para personas físicas con ingresos exclusivamente agrícolas, ganaderos, silvícolas o pesqueros: de $900,000 a $1,000,000 anuales.",
+    "**Plan México y Polos:** los beneficios de Plan México y de PODEBIS, POINBIS, PODECOBIS y PODECIBIS se incorporarían a la LISR mediante disposiciones temporales; se señalan deducciones relacionadas con inversión, capacitación e innovación.",
+    "**Retención de ISR por intereses:** la tasa anual contemplada en la LIF pasaría de 0.90% en 2026 a 0.68% en 2027.",
+    "**Repatriación de capitales:** tasa de 7.5% sobre el capital repatriado, condicionada a invertirlo en México en activos y gastos estratégicos para el desarrollo productivo. Será fundamental conocer plazo de permanencia, tipo de inversiones elegibles, fecha de retorno, documentación y tratamiento del principal versus rendimientos.",
+    "**Libros, periódicos y revistas:** de exentos a tasa 0% de IVA, siempre que la venta de esos bienes represente al menos 90% de los ingresos totales.",
+    "**OPI:** tasa de 10% sobre la ganancia en enajenación de acciones derivada de una OPI que cumpla requisitos; entre ellos, realizarse mediante bolsas concesionadas o mercados reconocidos y que el valor de mercado de la emisora sea igual o inferior a $50 mil millones."
+   ],
+   "ejemplo": "Ilustrativo: (1) Una librería con 95% de sus ingresos por libros cumple el mínimo de 90% y podría tener tasa 0%; con 85% no. (2) Sobre un capital de $10,000,000 en tesorería, la retención anual pasaría de $90,000 (0.90%) a $68,000 (0.68%): $22,000 menos de retención (la retención por intereses se calcula sobre el capital invertido).",
+   "palabras": [
+    "$1,000,000 sector primario",
+    "0.90% → 0.68%",
+    "Repatriación 7.5%",
+    "Tasa 0% ≥ 90%",
+    "OPI 10%",
+    "Plan México"
+   ],
+   "truco": "Escala de mayor a menor tasa: 10% OPI, 7.5% repatriación, 0.68% retención, 0% libros. Una para cada tipo de cliente."
+  },
+  {
+   "id": "s11",
+   "icono": "🏛️",
+   "titulo": "Derechos y cuotas: costos que también suben",
+   "pagina": "p. 3",
+   "queEs": "Cambios y aumentos en derechos. No son ISR ni IVA, pero pueden afectar los costos de las empresas. La Ley Federal de Derechos contempla modificaciones en migración, telecomunicaciones, infraestructura ferroviaria, trámites sanitarios, visas, medio ambiente, espacio aéreo, supervisión de AFORE, museos y zonas arqueológicas, servicios portuarios, certificaciones sanitarias y extracción de materiales.",
+   "paraQue": "Recordarte que el costo total de operar no depende solo de impuestos: los trámites y servicios del gobierno también se encarecen. Destaca un incremento de 16% en las cuotas de inspección y vigilancia bursátil de la CNBV.",
+   "elementos": [
+    "**Ley Federal de Derechos:** migración, telecomunicaciones, infraestructura ferroviaria, trámites sanitarios, visas, medio ambiente, espacio aéreo, supervisión de AFORE, museos y zonas arqueológicas, servicios portuarios, certificaciones sanitarias, extracción de materiales.",
+    "**CNBV:** +16% en cuotas de inspección y vigilancia bursátil.",
+    "**Por qué importa:** impacto en costos, no en impuestos."
+   ],
+   "ejemplo": "Ilustrativo: una empresa que tramita visas para personal extranjero, usa servicios portuarios o requiere certificaciones sanitarias debería revisar sus presupuestos de trámites 2027. Y una emisora supervisada por la CNBV debe considerar el +16% en cuotas de vigilancia bursátil.",
+   "palabras": [
+    "Ley Federal de Derechos",
+    "CNBV +16%",
+    "Costos de trámites",
+    "No es ISR ni IVA"
+   ],
+   "truco": "«Derechos ≠ impuestos»: son cuotas por trámites y servicios. Recuerda la cifra ancla: CNBV +16%."
+  },
+  {
+   "id": "s12",
+   "icono": "🚦",
+   "titulo": "Semáforo de prioridades para los clientes del despacho",
+   "pagina": "p. 3",
+   "critico": "Este orden de alertas es el que las notas proponen «desde la perspectiva práctica de Irazaba y Asociados». Es la mejor guía para decidir a quién llamar primero.",
+   "queEs": "Una clasificación en tres niveles de lo que hay que atender primero: impacto muy alto, impacto alto para determinados clientes y oportunidades fiscales. En este material se representan con la paleta morado / naranja / azul.",
+   "paraQue": "Priorizar el trabajo: qué clientes avisar de inmediato por riesgo y a quiénes ofrecer simulaciones por oportunidad.",
+   "elementos": [
+    "**🟣 Impacto muy alto:** nuevo límite de deducciones 96.67%/99%; limitación de pérdidas fiscales al 50%; reducción de deducibilidad de intereses del 30% al 20%.",
+    "**🟠 Impacto alto para determinados clientes:** cambios CUFIN/CUCA; pagos al extranjero; desaparición del ROGS; límite de $250 millones para el estímulo carretero.",
+    "**🔵 Oportunidades fiscales:** RESICO PF hasta $5 mdp; RESICO PM hasta $50 mdp y opcional; IVA simplificado del 7%; repatriación al 7.5%; Plan México/Polos de Desarrollo; tasa 0% editorial; estímulo de OPI."
+   ],
+   "ejemplo": "Ilustrativo: Cliente A, una inmobiliaria con mucha deuda: morado (intereses 30% → 20%). Cliente B, un grupo con ROGS: naranja. Cliente C, una consultora con $42 mdp de ingresos y nómina como costo principal: azul (RESICO PM opcional e IVA 7%).",
+   "palabras": [
+    "Impacto muy alto",
+    "Impacto alto (algunos clientes)",
+    "Oportunidades",
+    "Prioridad de alertas"
+   ],
+   "truco": "«Morado manda, naranja mira, azul vende»: el morado exige atención inmediata, el naranja se revisa caso por caso y el azul es una simulación que se ofrece."
+  },
+  {
+   "id": "s13",
+   "icono": "💼",
+   "titulo": "Cómo aprovecharlo desde el despacho",
+   "pagina": "p. 5",
+   "critico": "Cada beneficio es una simulación vendible, con urgencia natural entre octubre y enero.",
+   "error": "Dos advertencias: (1) todo esto es iniciativa: prepara las corridas ahora y decide hasta el decreto; (2) fraccionar una empresa para quedar bajo 50 mdp es lo que el SAT atacará con razón de negocios (art. 5-A CFF).",
+   "queEs": "El plan de acción de las notas: ordenar las oportunidades por impacto y convertirlas en servicios de una sola vez (simulaciones y corridas) para los clientes del despacho.",
+   "paraQue": "Convertir los cambios en servicios concretos con fechas: hay urgencia natural entre octubre y enero, y varias acciones (como la lista de cierre 2026) dependen de actuar antes del cierre del año.",
+   "elementos": [
+    "**1. RESICO PM opcional hasta 50 mdp (la joya):** flujo de efectivo, deducción de inversiones duplicada (50% / 26% / 20%) y opcionalidad.",
+    "**2. IVA opcional 7% para servicios:** de casi 16% a 7% sobre lo cobrado; hasta 9 puntos de margen.",
+    "**3. RESICO PF hasta 5 mdp:** tasas de 1% a 2.5%; sigue excluido quien sea socio o accionista de una persona moral (art. 113-E).",
+    "**4. Reingreso a RESICO tras regularización:** segunda oportunidad para clientes que hoy pagan tasa completa por un error de 2023 o 2024.",
+    "**5. Plazos de 20 años para pérdidas y deducciones diferidas:** menos riesgo de caducidad para startups o empresas en etapa de inversión.",
+    "**6. Menores:** retención 0.90% → 0.68%, repatriación 7.5%, Plan México/Polos, tasa 0% editorial y OPI al 10%.",
+    "**Servicios vendibles:** comparativo Título II vs RESICO PM; corrida de IVA 7% contra IVA acreditable real de 12 meses; reingreso a RESICO; lista de cierre 2026 para clientes con proveedores extranjeros."
+   ],
+   "ejemplo": "Ilustrativo: para un cliente consultor con IVA acreditable bajo, entregas un paquete de una sola vez: (a) comparativo Título II vs RESICO PM, (b) corrida del IVA 7% contra sus 12 meses reales de IVA acreditable y (c) recomendación con las advertencias (iniciativa y art. 5-A CFF).",
+   "palabras": [
+    "Simulación vendible",
+    "Lista de cierre 2026",
+    "Título II vs RESICO PM",
+    "Art. 5-A CFF",
+    "Octubre a enero"
+   ],
+   "truco": "Cuenta hasta seis, de más a menos impacto: PM opcional → IVA 7% → PF $5 mdp → reingreso → plazos 20 años → menores."
+  }
+ ],
+ "flashcards": [
+  {
+   "q": "¿Sobre qué temas se concentran los cambios fiscales relevantes para 2027 y cuál se considera probablemente el más importante?",
+   "a": "ISR de personas morales, pérdidas fiscales, intereses, RESICO, IVA y estímulos fiscales. El más importante (probablemente): el nuevo límite general a las deducciones de personas morales. (p. 1)"
+  },
+  {
+   "q": "¿A partir de qué umbral operaría el nuevo límite general de deducciones y qué pasa por debajo?",
+   "a": "Cuando las deducciones sean iguales o superiores al 96.67% de los ingresos acumulables, operaría el límite; si son inferiores, las deducciones autorizadas aplicables se establecerían al 99%. Ojo: redacción ambigua; confirmar con el articulado de la LISR. (p. 1)"
+  },
+  {
+   "q": "¿Qué efecto práctico podría tener el nuevo límite de deducciones?",
+   "a": "Podría generar ISR aun en empresas que hoy contable o fiscalmente logran reducir prácticamente toda su base mediante deducciones. (p. 1)"
+  },
+  {
+   "q": "¿Hasta qué proporción de la utilidad fiscal del ejercicio podrían disminuirse las pérdidas fiscales de ejercicios anteriores?",
+   "a": "Solo hasta el 50% de la utilidad fiscal del ejercicio. (p. 1)"
+  },
+  {
+   "q": "¿Qué se ofrece a cambio del límite del 50% a las pérdidas y qué consecuencia tiene para 2027?",
+   "a": "El plazo para amortizarlas aumentaría de 10 a 20 años. Aunque tengan pérdidas para eliminar la utilidad fiscal de 2027, aparentemente ya no podrían llevarla a cero mediante amortización. (p. 1)"
+  },
+  {
+   "q": "¿Cómo cambia el límite de deducción de intereses netos?",
+   "a": "Baja de 30% a 20% de la utilidad fiscal ajustada. (p. 1)"
+  },
+  {
+   "q": "¿Qué pasa con el interés no deducido y quién resiente más este cambio?",
+   "a": "Podría aprovecharse durante los 10 ejercicios siguientes. Lo resienten más los grupos altamente apalancados, inmobiliarias, desarrolladoras y empresas que financian inversiones con deuda. (p. 1)"
+  },
+  {
+   "q": "¿Cuándo se reconocerían como deducibles los pagos al extranjero?",
+   "a": "Hasta el ejercicio en que efectivamente se preste el servicio y se efectúe el pago. (p. 1)"
+  },
+  {
+   "q": "En anticipos al extranjero que comprendan más de un ejercicio, ¿cuándo procedería la deducción y cuál es la justificación?",
+   "a": "Cuando se use o goce efectivamente el bien arrendado. Justificación expresa: impedir deducciones anticipadas de operaciones que eventualmente podrían no realizarse. (p. 1)"
+  },
+  {
+   "q": "¿Qué cambia para determinar la CUFIN?",
+   "a": "Se disminuirían de la UFIN los gastos que no hayan cumplido los requisitos fiscales para ser deducibles. (p. 1)"
+  },
+  {
+   "q": "¿Por qué merece atención el cambio en CUFIN?",
+   "a": "Puede terminar afectando posteriormente la distribución de dividendos y el cálculo del ISR corporativo asociado. (p. 1)"
+  },
+  {
+   "q": "¿Qué cambia en la CUCA cuando hay capitalización de pasivos y para qué operaciones importa?",
+   "a": "No integrarían la CUCA los intereses devengados pero no pagados, ni el IVA correspondiente a esos pasivos. Importa en reestructuraciones corporativas y capitalizaciones de deuda. (p. 2)"
+  },
+  {
+   "q": "¿Qué se propone con el ROGS y cuál es el argumento de Hacienda?",
+   "a": "Eliminarlo y cobrar íntegro el impuesto diferido. Argumento: el esquema transitorio proveniente de las medidas de 2013 ya cumplió su objetivo. (p. 2)"
+  },
+  {
+   "q": "¿Cómo se focaliza el estímulo de autopistas de cuota?",
+   "a": "El crédito fiscal de hasta 50% del gasto en peaje quedaría para contribuyentes dedicados exclusivamente al autotransporte terrestre público o privado de carga, pasaje o turismo con ingresos anuales para ISR menores a $250 millones. (p. 2)"
+  },
+  {
+   "q": "¿Cuál sería el nuevo límite de RESICO para personas físicas?",
+   "a": "De $3.5 millones a $5 millones. (p. 2)"
+  },
+  {
+   "q": "¿Qué cambia en RESICO para personas morales y con qué otro ajuste se acompaña?",
+   "a": "De $35 millones a $50 millones, y el régimen sería opcional. Además aumentarían las tasas de depreciación de activos fijos. (p. 2)"
+  },
+  {
+   "q": "¿Cómo se determinaría el IVA mensual en el esquema simplificado para RESICO?",
+   "a": "Aplicando directamente 7% al valor total de los actos o actividades gravados efectivamente cobrados, sin derecho a acreditar el IVA trasladado en compras e inversiones. (p. 2)"
+  },
+  {
+   "q": "¿A quién le conviene el IVA del 7% y a quién no?",
+   "a": "Atractivo para actividades con poco IVA acreditable (servicios, honorarios, nómina como costo principal). Podría ser desfavorable para negocios con compras, inventarios o inversión considerable. Hay que simular cliente por cliente. (p. 2)"
+  },
+  {
+   "q": "¿Cuál es el nuevo monto exento para el sector primario?",
+   "a": "Para personas físicas con ingresos exclusivamente agrícolas, ganaderos, silvícolas o pesqueros: de $900,000 a $1,000,000 anuales. (p. 2)"
+  },
+  {
+   "q": "¿Qué pasa con Plan México y los Polos de Desarrollo?",
+   "a": "Sus beneficios (Plan México, PODEBIS, POINBIS, PODECOBIS y PODECIBIS) se incorporarían a la LISR mediante disposiciones temporales para dar mayor certeza jurídica; se señalan deducciones de inversión, capacitación e innovación. (p. 2)"
+  },
+  {
+   "q": "¿Cómo cambia la tasa anual de retención de ISR por intereses?",
+   "a": "De 0.90% en 2026 a 0.68% en 2027 (tasa contemplada en la LIF). (p. 2)"
+  },
+  {
+   "q": "¿En qué consiste el programa de repatriación de capitales y qué reglas específicas hay que conocer?",
+   "a": "Tasa de 7.5% sobre el capital repatriado, condicionada a invertirlo en México en activos y gastos estratégicos para el desarrollo productivo. Reglas clave: plazo de permanencia, tipo de inversiones elegibles, fecha de retorno, documentación y tratamiento del principal versus rendimientos. (p. 3)"
+  },
+  {
+   "q": "¿Qué cambia para libros, periódicos y revistas en IVA y con qué condición?",
+   "a": "Pasarían de exentos a tasa 0%, siempre que los ingresos por su venta representen al menos 90% de los ingresos totales del contribuyente. (p. 3)"
+  },
+  {
+   "q": "¿Por qué es importante la diferencia entre exención y tasa 0%?",
+   "a": "La tasa 0% puede permitir acreditamiento y recuperación del IVA relacionado, por lo que puede ser un beneficio considerable para editoriales y librerías elegibles. (p. 3)"
+  },
+  {
+   "q": "¿En qué consiste el estímulo para Ofertas Públicas Iniciales (OPI)?",
+   "a": "Tasa de 10% sobre la ganancia en enajenación de acciones cuando derive de una OPI y se cumplan requisitos: entre ellos, hacerse en bolsas concesionadas o mercados reconocidos y que la emisora tenga valor de mercado igual o inferior a $50 mil millones. (p. 3)"
+  },
+  {
+   "q": "¿Qué áreas toca la Ley Federal de Derechos y cuál es el aumento destacado de la CNBV?",
+   "a": "Migración, telecomunicaciones, infraestructura ferroviaria, trámites sanitarios, visas, medio ambiente, espacio aéreo, supervisión de AFORE, museos y zonas arqueológicas, servicios portuarios, certificaciones sanitarias y extracción de materiales. La CNBV sube 16% sus cuotas de inspección y vigilancia bursátil. (p. 3)"
+  },
+  {
+   "q": "¿Cuál es la meta recaudatoria proyectada por Hacienda?",
+   "a": "Ingresos tributarios por $6.264 billones, equivalentes al 15.9% del PIB, un incremento real de 5.9% respecto del cierre estimado de 2026. (p. 4)"
+  },
+  {
+   "q": "En el semáforo del despacho, ¿qué entra en «impacto muy alto»?",
+   "a": "Nuevo límite de deducciones 96.67%/99%; limitación de pérdidas fiscales al 50%; reducción de deducibilidad de intereses del 30% al 20%. (p. 3)"
+  },
+  {
+   "q": "En el semáforo del despacho, ¿qué entra en «impacto alto para determinados clientes»?",
+   "a": "Cambios CUFIN/CUCA; pagos al extranjero; desaparición del ROGS; límite de $250 millones para el estímulo carretero. (p. 3)"
+  },
+  {
+   "q": "En el semáforo del despacho, ¿cuáles son las «oportunidades fiscales»?",
+   "a": "RESICO PF hasta $5 mdp; RESICO PM hasta $50 mdp y opcional; IVA simplificado del 7%; repatriación al 7.5%; Plan México/Polos; tasa 0% editorial; estímulo de OPI. (p. 3)"
+  },
+  {
+   "q": "¿Por qué RESICO PM opcional es «la joya del paquete»?",
+   "a": "Tributa sobre flujo de efectivo (cobrado menos pagado), deduce inversiones más rápido (mobiliario y equipo 50%, inmuebles 26%, preoperativos 20%) y es opcional: puedes entrar o quedarte en Título II. (p. 5)"
+  },
+  {
+   "q": "¿Qué tasas tendría RESICO PF entre $3.5 y $5 mdp y quién sigue excluido?",
+   "a": "Tasas de 1% a 2.5%, las más bajas del sistema. Sigue excluido quien sea socio o accionista de una persona moral (art. 113-E). (p. 5)"
+  },
+  {
+   "q": "¿Qué pasa con quien fue expulsado de RESICO por omisiones?",
+   "a": "Puede regresar al ejercicio siguiente tras regularizarse. Es una segunda oportunidad para clientes que hoy pagan tasa completa por un error de 2023 o 2024. (p. 5)"
+  },
+  {
+   "q": "¿Cuánto margen puede ganar un negocio de servicios con el IVA opcional del 7%?",
+   "a": "Pasa de pagar casi 16% a 7% sobre lo cobrado: hasta 9 puntos de margen. En negocios con compras o inventarios normalmente no conviene, pero vale la corrida. (p. 5)"
+  },
+  {
+   "q": "¿Qué advertencias hacen las notas sobre aprovechar estos cambios?",
+   "a": "(1) Todo es iniciativa: preparar corridas ahora y decidir hasta el decreto. (2) Fraccionar una empresa para quedar bajo 50 mdp es lo que el SAT atacará con razón de negocios (art. 5-A CFF); la ventaja es crecer dentro del umbral. (p. 5)"
+  },
+  {
+   "q": "¿Qué servicios de una sola vez propone vender el despacho y cuándo hay urgencia?",
+   "a": "Comparativo Título II vs RESICO PM; corrida de IVA 7% contra IVA acreditable real de 12 meses; reingreso a RESICO; y lista de cierre 2026 para clientes con proveedores extranjeros. Urgencia natural entre octubre y enero. (p. 5)"
+  }
+ ],
+ "preguntas": [
+  {
+   "q": "Según el texto, ¿a partir de qué porcentaje de los ingresos acumulables operaría el nuevo límite general de deducciones para personas morales?",
+   "opciones": [
+    "100%",
+    "96.67%",
+    "90%",
+    "99%"
+   ],
+   "correcta": 1,
+   "explicacion": "Cuando las deducciones sean iguales o superiores al 96.67% de los ingresos acumulables, operaría el límite. El 99% es el porcentaje al que se establecerían las deducciones autorizadas aplicables cuando queden por debajo del umbral (p. 1)."
+  },
+  {
+   "q": "Una empresa tiene utilidad fiscal 2027 de $2,000,000 y pérdidas de ejercicios anteriores por $5,000,000. Con la propuesta, ¿cuánto podría amortizar como máximo en 2027?",
+   "opciones": [
+    "$500,000",
+    "$1,000,000",
+    "$2,000,000",
+    "$5,000,000"
+   ],
+   "correcta": 1,
+   "explicacion": "Las pérdidas solo podrían disminuir hasta el 50% de la utilidad fiscal del ejercicio: 50% de $2,000,000 = $1,000,000. Aunque tenga pérdidas suficientes para eliminar la utilidad, ya no podría llevarla a cero (p. 1). Ejemplo ilustrativo."
+  },
+  {
+   "q": "¿Cómo cambiaría el plazo para amortizar pérdidas fiscales?",
+   "opciones": [
+    "De 5 a 10 años",
+    "De 10 a 15 años",
+    "De 10 a 20 años",
+    "De 20 a 30 años"
+   ],
+   "correcta": 2,
+   "explicacion": "A cambio del tope del 50% de la utilidad fiscal, el plazo aumentaría de 10 a 20 años (p. 1)."
+  },
+  {
+   "q": "¿Cómo cambiaría el límite de deducción de intereses netos?",
+   "opciones": [
+    "De 50% a 30% de la utilidad fiscal ajustada",
+    "De 20% a 30% de la utilidad fiscal ajustada",
+    "Se eliminaría el límite y se deducirían en su totalidad",
+    "De 30% a 20% de la utilidad fiscal ajustada"
+   ],
+   "correcta": 3,
+   "explicacion": "La deducción de intereses netos, referenciada hoy al 30% de la utilidad fiscal ajustada, se propone reducirla al 20% (p. 1)."
+  },
+  {
+   "q": "El interés neto que no se pueda deducir por el nuevo límite, ¿durante cuántos ejercicios siguientes podría aprovecharse?",
+   "opciones": [
+    "3",
+    "5",
+    "10",
+    "20"
+   ],
+   "correcta": 2,
+   "explicacion": "El interés no deducido podría seguir aprovechándose durante los 10 ejercicios siguientes (p. 1). El 20 es el plazo de amortización de pérdidas, no el de intereses."
+  },
+  {
+   "q": "En 2027 un cliente paga por adelantado tres ejercicios de arrendamiento a un proveedor extranjero. Según la propuesta, ¿cuándo procedería la deducción?",
+   "opciones": [
+    "Cuando se use o goce efectivamente el bien arrendado",
+    "Toda en el ejercicio en que se hace el pago",
+    "No sería deducible en ningún caso",
+    "Hasta que termine el contrato de arrendamiento"
+   ],
+   "correcta": 0,
+   "explicacion": "Para anticipos que comprendan más de un ejercicio, la deducción procedería cuando se use o goce efectivamente el bien arrendado. La justificación es impedir deducciones anticipadas de operaciones que podrían no realizarse (p. 1)."
+  },
+  {
+   "q": "Para determinar la CUFIN, ¿qué se propone disminuir de la UFIN?",
+   "opciones": [
+    "Las pérdidas fiscales pendientes de amortizar",
+    "Los intereses devengados pero no pagados",
+    "Los dividendos ya distribuidos",
+    "Los gastos que no hayan cumplido los requisitos fiscales para ser deducibles"
+   ],
+   "correcta": 3,
+   "explicacion": "Se disminuirían de la UFIN los gastos que no hayan cumplido los requisitos fiscales para ser deducibles. Puede afectar la distribución de dividendos y el ISR corporativo asociado (p. 1). Los intereses devengados no pagados son el tema de la CUCA."
+  },
+  {
+   "q": "En una capitalización de deuda, ¿qué dejaría de integrarse a la CUCA?",
+   "opciones": [
+    "Las aportaciones en efectivo de los socios",
+    "Solo el capital principal del pasivo",
+    "Los intereses devengados pero no pagados y el IVA correspondiente",
+    "Las utilidades retenidas de ejercicios anteriores"
+   ],
+   "correcta": 2,
+   "explicacion": "Cuando exista capitalización de deuda, no integrarían la CUCA los intereses devengados pero no pagados, ni el IVA correspondiente a dichos pasivos (p. 2)."
+  },
+  {
+   "q": "¿Qué se propone respecto del Régimen Opcional para Grupos de Sociedades (ROGS)?",
+   "opciones": [
+    "Eliminarlo y cobrar de manera íntegra el impuesto diferido",
+    "Volverlo obligatorio para grupos apalancados",
+    "Ampliarlo a grupos con más sociedades",
+    "Mantenerlo pero con tasa reducida"
+   ],
+   "correcta": 0,
+   "explicacion": "Se propone eliminarlo y realizar el cobro íntegro del impuesto diferido; Hacienda argumenta que el esquema transitorio de las medidas de 2013 ya cumplió su objetivo (p. 2)."
+  },
+  {
+   "q": "El estímulo de autopistas de cuota (crédito de hasta 50% del gasto en peaje) quedaría dirigido a contribuyentes con ingresos anuales para ISR menores a:",
+   "opciones": [
+    "$35 millones",
+    "$50 millones",
+    "$250 millones",
+    "$500 millones"
+   ],
+   "correcta": 2,
+   "explicacion": "Además de tener ingresos menores a $250 millones, deben dedicarse exclusivamente al autotransporte terrestre público o privado de carga, pasaje o turismo (p. 2)."
+  },
+  {
+   "q": "¿Cuál sería el nuevo límite de ingresos para personas morales en RESICO y qué característica tendría el régimen?",
+   "opciones": [
+    "$50 millones y obligatorio",
+    "$5 millones y obligatorio",
+    "$35 millones y opcional",
+    "$50 millones y opcional"
+   ],
+   "correcta": 3,
+   "explicacion": "Para personas morales el límite pasaría de $35 millones a $50 millones y se plantea que el régimen sea opcional (p. 2)."
+  },
+  {
+   "q": "Una persona física con ingresos de $4.5 millones factura servicios y además es socia de una persona moral. ¿Podría aplicar RESICO PF con el límite ampliado a $5 millones?",
+   "opciones": [
+    "Sí, siempre que el régimen sea opcional",
+    "Sí, porque $4.5 millones queda por debajo de $5 millones",
+    "Sí, pero solo con la tasa de 2.5%",
+    "No, sigue excluido quien sea socio o accionista de una persona moral (art. 113-E)"
+   ],
+   "correcta": 3,
+   "explicacion": "Las notas advierten que sigue excluido quien sea socio o accionista de una persona moral (art. 113-E), así que no aplica para socios que también facturan servicios (p. 5)."
+  },
+  {
+   "q": "En RESICO PM opcional, según las notas del despacho, ¿sobre qué base tributaría la empresa?",
+   "opciones": [
+    "Flujo de efectivo: cobrado menos pagado",
+    "Utilidad contable",
+    "Ingresos devengados",
+    "Ingresos brutos sin deducciones"
+   ],
+   "correcta": 0,
+   "explicacion": "Tributa sobre flujo de efectivo (cobrado menos pagado), no sobre devengado: las cuentas por cobrar dejan de generar ISR hasta que se cobran (p. 5)."
+  },
+  {
+   "q": "En el esquema simplificado de IVA para RESICO, ¿cómo se determinaría el IVA mensual?",
+   "opciones": [
+    "16% de lo devengado menos el IVA acreditable",
+    "7% de los actos gravados devengados, con acreditamiento completo",
+    "7% de las utilidades del mes",
+    "7% del valor total de los actos gravados efectivamente cobrados, sin acreditar el IVA de compras e inversiones"
+   ],
+   "correcta": 3,
+   "explicacion": "Se aplica directamente 7% al valor total de los actos o actividades gravados efectivamente cobrados, sin derecho a acreditar el IVA trasladado en compras e inversiones (p. 2)."
+  },
+  {
+   "q": "Un despacho de consultoría cuyo principal costo es nómina (casi sin IVA acreditable) evalúa el IVA opcional de 7%. ¿Qué se espera según las notas?",
+   "opciones": [
+    "No podría optar porque los servicios están excluidos",
+    "Pasaría de pagar casi 16% a 7% sobre lo cobrado: hasta 9 puntos de margen",
+    "Pagaría 7% y además podría acreditar todas sus compras",
+    "Le resultaría desfavorable por tener poco IVA acreditable"
+   ],
+   "correcta": 1,
+   "explicacion": "Para negocios de servicios cuyo costo principal es nómina, el paso de casi 16% a 7% sobre lo cobrado puede significar hasta 9 puntos de margen (p. 5). Ojo: con el 7% no hay acreditamiento."
+  },
+  {
+   "q": "¿Qué condición se pide para que libros, periódicos y revistas pasen de exentos a tasa 0% de IVA?",
+   "opciones": [
+    "Que el contribuyente esté inscrito en RESICO",
+    "Que los ingresos por su venta representen al menos 90% de los ingresos totales del contribuyente",
+    "Que la editorial tenga ingresos menores a $50 millones",
+    "Que se vendan solo en formato digital"
+   ],
+   "correcta": 1,
+   "explicacion": "El estímulo de tasa 0% aplicaría siempre que los ingresos por la venta de esos bienes representen cuando menos 90% de los ingresos totales (p. 3). La tasa 0% puede permitir acreditar y recuperar IVA; la exención no."
+  },
+  {
+   "q": "¿Cuál es uno de los requisitos del estímulo del 10% sobre la ganancia por enajenación de acciones derivada de una OPI?",
+   "opciones": [
+    "Que las acciones se conserven durante 20 años",
+    "Que la oferta se realice fuera de México",
+    "Que la emisora tenga un valor de mercado igual o inferior a $50 mil millones",
+    "Que la emisora tenga un valor de mercado de al menos $50 mil millones"
+   ],
+   "correcta": 2,
+   "explicacion": "Entre los requisitos: realizarse mediante bolsas concesionadas o mercados reconocidos y que el valor de mercado de la emisora sea igual o inferior a $50 mil millones (p. 3)."
+  },
+  {
+   "q": "El programa de repatriación de capitales aplicaría una tasa de 7.5% sobre el capital repatriado, condicionada a que:",
+   "opciones": [
+    "Los recursos se inviertan en México en activos y gastos estratégicos para el desarrollo productivo",
+    "El contribuyente sea persona moral con ingresos menores a $50 millones",
+    "Se deposite en instrumentos de deuda del gobierno federal",
+    "Se distribuya como dividendo en el mismo ejercicio"
+   ],
+   "correcta": 0,
+   "explicacion": "La condición es que los recursos sean invertidos en México en activos y gastos estratégicos destinados al desarrollo productivo; por eso será clave conocer plazo de permanencia, inversiones elegibles, fecha de retorno y documentación (p. 3)."
+  },
+  {
+   "q": "Un cliente con ingresos de $60 millones piensa dividir su empresa en dos sociedades para quedar debajo de 50 mdp y entrar a RESICO PM. ¿Qué advierten las notas?",
+   "opciones": [
+    "El SAT buscará atacarlo con razón de negocios (art. 5-A CFF); la ventaja se aprovecha creciendo dentro del umbral, no partiéndose",
+    "Solo está prohibido para RESICO PF",
+    "Es válido siempre que ambas sociedades tengan el mismo socio",
+    "Es una práctica recomendada porque el régimen es opcional"
+   ],
+   "correcta": 0,
+   "explicacion": "Fraccionar una empresa para quedar bajo 50 mdp es exactamente lo que el SAT buscará atacar con razón de negocios (art. 5-A CFF). La ventaja debe aprovecharse creciendo dentro del umbral (p. 5)."
+  },
+  {
+   "q": "Según el orden de alertas del despacho, ¿cuál de los siguientes NO está en el nivel de «impacto muy alto»?",
+   "opciones": [
+    "Nuevo límite de deducciones 96.67%/99%",
+    "Limitación de pérdidas fiscales al 50%",
+    "Reducción de deducibilidad de intereses del 30% al 20%",
+    "Desaparición del ROGS"
+   ],
+   "correcta": 3,
+   "explicacion": "El ROGS está en «impacto alto para determinados clientes», junto con CUFIN/CUCA, pagos al extranjero y el límite de $250 millones del estímulo carretero. Los tres primeros son el «impacto muy alto» (p. 3)."
+  }
+ ],
+ "mapa": {
+  "raiz": "Propuestas fiscales 2027",
+  "ramas": [
+   {
+    "titulo": "🚧 Endurecen la base (PM)",
+    "hojas": [
+     "Deducciones: umbral 96.67% / 99%",
+     "Pérdidas: 50% de la utilidad fiscal y plazo 10 → 20 años",
+     "Intereses: 30% → 20% (arrastre 10 ejercicios)",
+     "Pagos al extranjero: servicio prestado + pago efectuado",
+     "Anticipos: se deduce al uso o goce"
+    ]
+   },
+   {
+    "titulo": "🧮 Cuentas y grupos",
+    "hojas": [
+     "CUFIN: se restan gastos no deducibles",
+     "CUCA: sin intereses devengados no pagados ni IVA",
+     "ROGS: desaparece; cobro íntegro del impuesto diferido",
+     "Estímulo carretero: exclusivo autotransporte, menos de $250 mdp"
+    ]
+   },
+   {
+    "titulo": "🚀 RESICO",
+    "hojas": [
+     "PF: $3.5 → $5 mdp (tasas 1% a 2.5%)",
+     "PM: $35 → $50 mdp y opcional",
+     "Base: flujo de efectivo",
+     "Deducción: equipo 50%, inmuebles 26%, preoperativos 20%",
+     "Reingreso tras regularización",
+     "Sigue excluido el socio de PM (art. 113-E)"
+    ]
+   },
+   {
+    "titulo": "🧾 IVA",
+    "hojas": [
+     "Opcional 7% sobre lo cobrado, sin acreditar",
+     "Conviene con poco IVA acreditable (regla 16 − 7 = 9)",
+     "Libros, periódicos y revistas: exentos → tasa 0% (≥ 90% de ingresos)"
+    ]
+   },
+   {
+    "titulo": "🎁 Estímulos",
+    "hojas": [
+     "Sector primario: $900,000 → $1,000,000",
+     "Plan México y Polos → LISR",
+     "Retención de intereses: 0.90% → 0.68%",
+     "Repatriación de capitales: 7.5%",
+     "OPI: 10% (emisora ≤ $50 mil millones)"
+    ]
+   },
+   {
+    "titulo": "🏛️ Derechos y cuotas",
+    "hojas": [
+     "Ley Federal de Derechos: migración, sanitarios, puertos, espacio aéreo…",
+     "CNBV: +16% en inspección y vigilancia bursátil"
+    ]
+   },
+   {
+    "titulo": "💼 Estrategia del despacho",
+    "hojas": [
+     "Meta: $6.264 billones (15.9% del PIB; +5.9% real)",
+     "Semáforo: morado / naranja / azul",
+     "Servicios: comparativos y corridas de una sola vez",
+     "Advertencias: iniciativa y art. 5-A CFF"
+    ]
+   }
+  ]
+ },
+ "resumen": [
+  {
+   "seccion": "1. Panorama",
+   "contiene": "Meta de $6.264 billones (15.9% del PIB, +5.9% real) y principales bloques",
+   "sirve": "Entender que no son cambios cosméticos y que todo es iniciativa",
+   "clave": "Iniciativa"
+  },
+  {
+   "seccion": "2. Límite de deducciones",
+   "contiene": "Umbral 96.67% de ingresos acumulables; 99% por debajo",
+   "sirve": "Evitar que empresas con utilidad reduzcan toda su base con deducciones",
+   "clave": "96.67% / 99%"
+  },
+  {
+   "seccion": "3. Pérdidas fiscales",
+   "contiene": "Tope de 50% de la utilidad fiscal; plazo de 10 a 20 años",
+   "sirve": "Recaudar aun con pérdidas acumuladas; dar más tiempo para usarlas",
+   "clave": "50% y 20 años"
+  },
+  {
+   "seccion": "4. Intereses",
+   "contiene": "Deducibilidad de 30% a 20% de la utilidad fiscal ajustada; arrastre de 10 ejercicios",
+   "sirve": "Limitar la deducción financiera; pega a apalancados e inmobiliarias",
+   "clave": "30% → 20%"
+  },
+  {
+   "seccion": "5. Pagos al extranjero",
+   "contiene": "Deducible cuando se preste el servicio y se pague; anticipos al uso o goce",
+   "sirve": "Impedir deducciones anticipadas de operaciones que podrían no realizarse",
+   "clave": "Servicio + pago"
+  },
+  {
+   "seccion": "6. CUFIN y CUCA",
+   "contiene": "CUFIN resta gastos no deducibles; CUCA excluye intereses devengados no pagados e IVA",
+   "sirve": "Cuidar dividendos, ISR corporativo y reestructuras",
+   "clave": "CUFIN / CUCA"
+  },
+  {
+   "seccion": "7. ROGS y carretero",
+   "contiene": "ROGS desaparece; crédito de peaje solo para transportistas con menos de $250 mdp",
+   "sirve": "Cerrar esquemas transitorios y focalizar estímulos",
+   "clave": "Fin de ROGS"
+  },
+  {
+   "seccion": "8. RESICO",
+   "contiene": "PF a $5 mdp; PM a $50 mdp opcional; flujo de efectivo; reingreso",
+   "sirve": "Oportunidad de planeación: clientes que vuelven a calificar",
+   "clave": "$5 y $50 mdp"
+  },
+  {
+   "seccion": "9. IVA 7%",
+   "contiene": "7% sobre lo cobrado, sin acreditar compras ni inversiones",
+   "sirve": "Ahorro para servicios con poco IVA acreditable (hasta 9 puntos)",
+   "clave": "7% sin acreditar"
+  },
+  {
+   "seccion": "10. Otros estímulos",
+   "contiene": "Sector primario, Plan México/Polos, retención 0.68%, repatriación 7.5%, libros 0%, OPI 10%",
+   "sirve": "Perfiles específicos: agro, editoriales, inversionistas, quienes salen a bolsa",
+   "clave": "Menores pero útiles"
+  },
+  {
+   "seccion": "11. Derechos",
+   "contiene": "Cambios en la Ley Federal de Derechos y +16% en cuotas de la CNBV",
+   "sirve": "Anticipar mayores costos de trámites y servicios",
+   "clave": "CNBV +16%"
+  },
+  {
+   "seccion": "12. Semáforo",
+   "contiene": "Impacto muy alto, impacto alto para algunos y oportunidades",
+   "sirve": "Priorizar clientes y llamadas",
+   "clave": "Morado / naranja / azul"
+  },
+  {
+   "seccion": "13. Estrategia",
+   "contiene": "Top 6 de oportunidades, servicios vendibles y dos advertencias",
+   "sirve": "Convertir los cambios en servicios concretos antes del decreto",
+   "clave": "Simulación vendible"
+  }
+ ],
+ "cifras": [
+  {
+   "concepto": "Límite general de deducciones (PM)",
+   "antes": "No existe un límite general",
+   "despues": "Umbral 96.67% de ingresos acumulables; 99% por debajo (texto ambiguo)"
+  },
+  {
+   "concepto": "Amortización de pérdidas: tope",
+   "antes": "Aparentemente podían llevar la utilidad a cero",
+   "despues": "Hasta 50% de la utilidad fiscal del ejercicio"
+  },
+  {
+   "concepto": "Amortización de pérdidas: plazo",
+   "antes": "10 años",
+   "despues": "20 años"
+  },
+  {
+   "concepto": "Deducción de intereses netos",
+   "antes": "30% de la utilidad fiscal ajustada",
+   "despues": "20% (arrastre 10 ejercicios)"
+  },
+  {
+   "concepto": "RESICO personas físicas",
+   "antes": "$3.5 millones",
+   "despues": "$5 millones"
+  },
+  {
+   "concepto": "RESICO personas morales",
+   "antes": "$35 millones",
+   "despues": "$50 millones y opcional"
+  },
+  {
+   "concepto": "IVA para RESICO",
+   "antes": "Casi 16% con acreditamiento (régimen general)",
+   "despues": "Opción: 7% sobre lo cobrado, sin acreditar"
+  },
+  {
+   "concepto": "Sector primario (exención PF)",
+   "antes": "$900,000",
+   "despues": "$1,000,000"
+  },
+  {
+   "concepto": "Retención de ISR por intereses",
+   "antes": "0.90% (2026)",
+   "despues": "0.68% (2027)"
+  },
+  {
+   "concepto": "Repatriación de capitales",
+   "antes": "Sin programa",
+   "despues": "7.5% sobre el capital repatriado"
+  },
+  {
+   "concepto": "Libros, periódicos y revistas (IVA)",
+   "antes": "Exentos",
+   "despues": "Tasa 0% si son ≥ 90% de los ingresos"
+  },
+  {
+   "concepto": "Ganancia por OPI",
+   "antes": "Sin estímulo específico",
+   "despues": "10% (emisora ≤ $50 mil millones)"
+  },
+  {
+   "concepto": "Estímulo de autopistas",
+   "antes": "Crédito de hasta 50% del peaje, sin la restricción propuesta",
+   "despues": "Solo autotransporte exclusivo con ingresos < $250 mdp"
+  },
+  {
+   "concepto": "Cuotas de la CNBV",
+   "antes": "Cuota vigente",
+   "despues": "+16%"
+  },
+  {
+   "concepto": "Ingresos tributarios proyectados",
+   "antes": "Cierre estimado 2026",
+   "despues": "$6.264 billones (15.9% del PIB; +5.9% real)"
+  }
+ ],
+ "rapido": {
+  "tarjetas": [
+   {
+    "titulo": "🟣 Los números que duelen",
+    "items": [
+     "**96.67% / 99%**: límite de deducciones",
+     "**50%** de la utilidad fiscal: tope a pérdidas",
+     "**20 años** para amortizar (antes 10)",
+     "**30% → 20%**: intereses (arrastre 10 ejercicios)"
+    ]
+   },
+   {
+    "titulo": "🔵 Los números que ayudan",
+    "items": [
+     "**$5 mdp**: RESICO PF (1% a 2.5%)",
+     "**$50 mdp**: RESICO PM, opcional",
+     "**7%**: IVA sobre lo cobrado (sin acreditar)",
+     "**7.5%**: repatriación · **10%**: OPI · **0.68%**: retención",
+     "**$1,000,000**: exención sector primario"
+    ]
+   },
+   {
+    "titulo": "🟠 Alerta para algunos clientes",
+    "items": [
+     "**CUFIN/CUCA**: dividendos y capitalizaciones",
+     "**Pagos al extranjero**: servicio + pago",
+     "**ROGS** desaparece",
+     "**$250 mdp**: tope del estímulo carretero"
+    ]
+   },
+   {
+    "titulo": "🚨 Errores comunes",
+    "items": [
+     "Tratar la propuesta como ley vigente",
+     "Confundir exención con tasa 0%",
+     "Asumir que el 7% siempre conviene",
+     "Fraccionar para entrar a RESICO (art. 5-A CFF)",
+     "Confundir CUFIN (utilidades) con CUCA (aportaciones)"
+    ]
+   },
+   {
+    "titulo": "⭐ Frases ancla",
+    "items": [
+     "«Mitad y doble»: 50% y 10 → 20 años",
+     "«Tres a dos»: intereses 30 → 20",
+     "«Servicio + pago = deducción»",
+     "«Morado manda, naranja mira, azul vende»",
+     "«16 − 7 = 9» (regla derivada de aritmética simple)"
+    ]
+   },
+   {
+    "titulo": "📅 Fechas y urgencia",
+    "items": [
+     "Urgencia natural entre **octubre y enero**",
+     "Preparar la **lista de cierre 2026** para clientes con proveedores extranjeros",
+     "Decidir hasta el **decreto**; preparar corridas desde ahora"
+    ]
+   }
+  ],
+  "plan30": [
+   {
+    "min": "0–5 min",
+    "accion": "Lee la «Tabla de cifras» (pestaña Resumen)."
+   },
+   {
+    "min": "5–12 min",
+    "accion": "Memoriza las tarjetas «números que duelen» y «números que ayudan» de esta hoja."
+   },
+   {
+    "min": "12–22 min",
+    "accion": "Recorre las flashcards y marca las que ya dominas."
+   },
+   {
+    "min": "22–28 min",
+    "accion": "Contesta el simulacro completo (20 preguntas)."
+   },
+   {
+    "min": "28–30 min",
+    "accion": "Revisa solo las incorrectas y repasa su sección en la guía."
+   }
+  ],
+  "nota": "El 20% que más rinde: los tres pilares del impacto muy alto (96.67/99, pérdidas 50%, intereses 30 → 20), la ampliación de RESICO ($5 y $50 mdp) y el IVA del 7%."
+ }
+};
+</script>
+
+<script>
+(function () {
+  'use strict';
+  var D = DATA;
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var esc = function (s) {
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  };
+  var fmt = function (s) { return esc(s).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>'); };
+  var LETTERS = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+  var SECC = D.secciones || [];
+  var CARDS = D.flashcards || [];
+  var QS = D.preguntas || [];
+
+  /* ---------- Estado y almacenamiento (con respaldo en memoria) ---------- */
+  var KEY = 'ms_' + ((D.meta && D.meta.id) || 'material');
+  var state = { cards: [], answers: {} };
+  function load() {
+    try {
+      var raw = localStorage.getItem(KEY);
+      if (!raw) return;
+      var p = JSON.parse(raw);
+      if (p && Array.isArray(p.cards)) {
+        state.cards = p.cards.filter(function (n) { return typeof n === 'number' && n >= 0 && n < CARDS.length; });
+      }
+      if (p && p.answers && typeof p.answers === 'object') {
+        Object.keys(p.answers).forEach(function (k) {
+          var qi = parseInt(k, 10), v = p.answers[k];
+          if (qi >= 0 && qi < QS.length && typeof v === 'number' && v >= 0 && v < QS[qi].opciones.length) state.answers[qi] = v;
+        });
+      }
+    } catch (e) { /* sin almacenamiento: se trabaja en memoria */ }
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  /* ---------- Cabecera ---------- */
+  function renderHero() {
+    var m = D.meta || {};
+    document.title = (m.titulo || 'Material') + ' — Material de Estudio';
+    $('#heroTitle').textContent = m.titulo || '';
+    $('#heroSub').textContent = m.subtitulo || '';
+    $('#heroStats').innerHTML =
+      '<div class="stat"><span class="stat-num">' + SECC.length + '</span><span class="stat-label">Secciones</span></div>' +
+      '<div class="stat"><span class="stat-num">' + CARDS.length + '</span><span class="stat-label">Flashcards</span></div>' +
+      '<div class="stat"><span class="stat-num">' + QS.length + '</span><span class="stat-label">Preguntas</span></div>';
+    var meta = [];
+    if (m.fuente) meta.push('Fuente: ' + esc(m.fuente));
+    if (m.fecha) meta.push('Elaborado el ' + esc(m.fecha));
+    $('#heroMeta').innerHTML = meta.join(' · ');
+    $('#avisoWrap').innerHTML = m.aviso ? '<div class="aviso-box" role="note">⚠️ ' + fmt(m.aviso) + '</div>' : '';
+    $('#footer').textContent = (m.titulo || '') + (m.fecha ? ' · ' + m.fecha : '') + ' · Material de estudio interactivo (funciona sin internet)';
+  }
+
+  /* ---------- Guía de estudio ---------- */
+  function renderGuia() {
+    var h = '<p class="tab-intro">Lee sección por sección. ⭐ marca lo crítico para examen y 🚨 los errores comunes.</p>';
+    h += '<div class="chips">' + SECC.map(function (s, i) {
+      return '<a class="chip" href="#sec-' + esc(s.id) + '">' + esc(s.icono || '') + ' ' + (i + 1) + '</a>';
+    }).join('') + '</div>';
+    SECC.forEach(function (s, i) {
+      h += '<article class="section-card" id="sec-' + esc(s.id) + '">';
+      h += '<h2 class="section-title"><span class="num">' + esc(s.icono || '') + ' ' + (i + 1) + '.</span><span>' + esc(s.titulo) + '</span></h2>';
+      h += '<div class="section-sub">';
+      if (s.critico) h += '<span class="badge badge-exam">⭐ Crítico para examen</span>';
+      if (s.error) h += '<span class="badge badge-error">🚨 Cuidado con errores comunes</span>';
+      if (s.pagina) h += '<span class="badge badge-page">📄 ' + esc(s.pagina) + ' del PDF</span>';
+      h += '</div>';
+      if (s.critico) h += '<div class="label-critical">⭐ ' + fmt(s.critico) + '</div>';
+      if (s.queEs) h += '<div class="block"><div class="block-label">¿Qué es?</div><p>' + fmt(s.queEs) + '</p></div>';
+      if (s.paraQue) h += '<div class="block"><div class="block-label">¿Para qué sirve?</div><p>' + fmt(s.paraQue) + '</p></div>';
+      if (s.elementos && s.elementos.length) {
+        h += '<div class="block"><div class="block-label">Elementos</div><ul>' + s.elementos.map(function (e) { return '<li>' + fmt(e) + '</li>'; }).join('') + '</ul></div>';
+      }
+      if (s.ejemplo) h += '<div class="block"><div class="block-label">Ejemplo práctico</div><div class="example-box">' + fmt(s.ejemplo) + '</div></div>';
+      if (s.error) h += '<div class="label-error">🚨 ' + fmt(s.error) + '</div>';
+      if (s.palabras && s.palabras.length) {
+        h += '<div class="block"><div class="block-label">Palabras clave</div><div class="kw">' + s.palabras.map(function (w) { return '<span class="keyword-tag">' + esc(w) + '</span>'; }).join('') + '</div></div>';
+      }
+      if (s.truco) h += '<div class="block"><div class="block-label">Truco de memorización</div><div class="trick-box">💡 ' + fmt(s.truco) + '</div></div>';
+      h += '</article>';
+    });
+    if (D.meta && D.meta.notaFuente) h += '<div class="note-source">📎 <strong>Nota sobre la fuente:</strong> ' + fmt(D.meta.notaFuente) + '</div>';
+    if (!SECC.length) h += '<div class="empty">Aún no hay secciones cargadas.</div>';
+    $('#tab-guia').innerHTML = h;
+  }
+
+  /* ---------- Flashcards ---------- */
+  var order = CARDS.map(function (_, i) { return i; });
+  var pos = 0, onlyPending = false, flipTimer = null;
+
+  function deck() { return onlyPending ? order.filter(function (i) { return state.cards.indexOf(i) === -1; }) : order; }
+
+  function buildFlashcards() {
+    if (!CARDS.length) { $('#tab-flashcards').innerHTML = '<div class="empty">Aún no hay flashcards cargadas.</div>'; return; }
+    $('#tab-flashcards').innerHTML =
+      '<p class="tab-intro">Piensa tu respuesta antes de voltear la tarjeta. Marca «La domino» solo cuando puedas responderla sin ver.</p>' +
+      '<div class="flashcard-nav"><span class="flashcard-counter" id="fcCounter"></span><span class="flashcard-progress-text" id="fcProgress"></span></div>' +
+      '<div class="fc-tools">' +
+        '<button type="button" class="btn btn-secondary btn-toggle" id="fcPending" aria-pressed="false">Solo pendientes</button>' +
+        '<button type="button" class="btn btn-secondary" id="fcShuffle">🔀 Barajar</button>' +
+        '<button type="button" class="btn btn-secondary" id="fcReset">↺ Reiniciar orden</button>' +
+      '</div>' +
+      '<div id="fcArea">' +
+        '<div class="flashcard-scene" id="fcScene" role="button" tabindex="0" aria-label="Tarjeta: presiona para voltearla">' +
+          '<div class="flashcard-inner">' +
+            '<div class="flashcard-front"><div class="flashcard-label">Pregunta</div><div class="flashcard-text" id="fcFront"></div><div class="flashcard-hint">Toca la tarjeta para ver la respuesta</div></div>' +
+            '<div class="flashcard-back"><div class="flashcard-label">Respuesta</div><div class="flashcard-text" id="fcBack"></div><div class="done-mark">✓ Ya la dominas</div></div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="flashcard-controls">' +
+          '<button type="button" class="btn btn-secondary" id="fcPrev">← Anterior</button>' +
+          '<button type="button" class="btn btn-secondary" id="fcRepasar" title="Quitar la marca de dominada">Repasar de nuevo</button>' +
+          '<button type="button" class="btn btn-primary" id="fcDone">✓ La domino</button>' +
+          '<button type="button" class="btn btn-secondary" id="fcNext">Siguiente →</button>' +
+        '</div>' +
+      '</div>' +
+      '<div class="empty" id="fcEmpty" style="display:none">🎉 ¡Dominaste todas las flashcards! Desactiva «Solo pendientes» o reinicia el progreso para repasarlas otra vez.</div>';
+
+    $('#fcScene').addEventListener('click', flip);
+    $('#fcScene').addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); } });
+    $('#fcNext').addEventListener('click', function () { move(1); });
+    $('#fcPrev').addEventListener('click', function () { move(-1); });
+    $('#fcDone').addEventListener('click', markDone);
+    $('#fcRepasar').addEventListener('click', unmark);
+    $('#fcPending').addEventListener('click', function () {
+      onlyPending = !onlyPending; this.setAttribute('aria-pressed', String(onlyPending)); pos = 0; renderCard(true);
+    });
+    $('#fcShuffle').addEventListener('click', function () {
+      for (var i = order.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = order[i]; order[i] = order[j]; order[j] = t; }
+      pos = 0; renderCard(true);
+    });
+    $('#fcReset').addEventListener('click', function () {
+      order = CARDS.map(function (_, i) { return i; }); pos = 0; renderCard(true);
+    });
+    renderCard(true);
+  }
+
+  function flip() { $('#fcScene').classList.toggle('flipped'); }
+
+  function renderCard(instant) {
+    var d = deck();
+    var area = $('#fcArea'), empty = $('#fcEmpty');
+    if (!d.length) { area.style.display = 'none'; empty.style.display = 'block'; updateFcStats(0, 0); return; }
+    area.style.display = ''; empty.style.display = 'none';
+    if (pos >= d.length) pos = 0;
+    if (pos < 0) pos = d.length - 1;
+    var idx = d[pos], c = CARDS[idx], scene = $('#fcScene');
+    function fill() {
+      $('#fcFront').innerHTML = fmt(c.q);
+      $('#fcBack').innerHTML = fmt(c.a);
+      scene.classList.toggle('is-done', state.cards.indexOf(idx) !== -1);
+    }
+    clearTimeout(flipTimer);
+    if (scene.classList.contains('flipped') && !instant) {
+      scene.classList.remove('flipped');
+      flipTimer = setTimeout(fill, 260); /* evita ver la respuesta nueva mientras la tarjeta gira */
+    } else {
+      scene.classList.remove('flipped'); fill();
+    }
+    updateFcStats(pos + 1, d.length);
+  }
+  function updateFcStats(p, n) {
+    $('#fcCounter').textContent = n ? ('Tarjeta ' + p + ' de ' + n + (onlyPending ? ' (pendientes)' : '')) : 'Sin tarjetas por mostrar';
+    $('#fcProgress').textContent = '✅ ' + state.cards.length + ' de ' + CARDS.length + ' dominadas';
+  }
+  function move(dir) { var d = deck(); if (!d.length) return; pos = (pos + dir + d.length) % d.length; renderCard(false); }
+  function markDone() {
+    var d = deck(); if (!d.length) return;
+    var idx = d[pos];
+    if (state.cards.indexOf(idx) === -1) state.cards.push(idx);
+    save(); updateProgress();
+    if (onlyPending) { renderCard(false); } else { move(1); }
+  }
+  function unmark() {
+    var d = deck(); if (!d.length) return;
+    var idx = d[pos], k = state.cards.indexOf(idx);
+    if (k !== -1) state.cards.splice(k, 1);
+    save(); updateProgress(); $('#fcScene').classList.remove('is-done'); updateFcStats(pos + 1, d.length);
+  }
+
+  /* ---------- Simulacro ---------- */
+  function buildExam() {
+    if (!QS.length) { $('#tab-examen').innerHTML = '<div class="empty">Aún no hay preguntas cargadas.</div>'; return; }
+    var h = '<p class="tab-intro">Elige una opción: la corrección es inmediata y cada respuesta trae su explicación con la página de la fuente.</p>';
+    h += '<div class="exam-bar" aria-live="polite"><span id="examStatus"></span><button type="button" class="btn btn-secondary" id="examReset">↺ Reiniciar simulacro</button></div>';
+    QS.forEach(function (q, qi) {
+      h += '<div class="question-card" id="q-' + qi + '"><div class="question-num">Pregunta ' + (qi + 1) + ' de ' + QS.length + '</div>' +
+        '<div class="question-text">' + fmt(q.q) + '</div><div class="options">';
+      q.opciones.forEach(function (o, oi) {
+        h += '<button type="button" class="option" data-q="' + qi + '" data-o="' + oi + '"><span class="option-letter">' + LETTERS[oi] + '</span><span class="option-text">' + fmt(o) + '</span><span class="option-mark"></span></button>';
+      });
+      h += '</div><div class="explanation" id="exp-' + qi + '"></div></div>';
+    });
+    h += '<div class="score-display" id="scoreBox"><div class="score-number" id="scoreNum"></div><div class="score-label" id="scoreLabel"></div><div class="score-msg" id="scoreMsg"></div><div class="score-fails" id="scoreFails"></div></div>';
+    $('#tab-examen').innerHTML = h;
+    $$('#tab-examen .option').forEach(function (b) {
+      b.addEventListener('click', function () { answer(+b.dataset.q, +b.dataset.o, true); });
+    });
+    $('#examReset').addEventListener('click', function () {
+      if (Object.keys(state.answers).length && !confirm('¿Reiniciar el simulacro? Se borrarán tus respuestas.')) return;
+      state.answers = {}; save(); buildExam(); updateProgress(); window.scrollTo({ top: 0 });
+    });
+    Object.keys(state.answers).forEach(function (k) { answer(+k, state.answers[k], false); });
+    updateExamStatus();
+  }
+
+  function answer(qi, oi, persist) {
+    var card = $('#q-' + qi); if (!card) return;
+    if (persist && state.answers[qi] !== undefined) return;
+    var q = QS[qi], ok = oi === q.correcta;
+    state.answers[qi] = oi;
+    var opts = $$('.option', card);
+    opts.forEach(function (b) { b.disabled = true; });
+    opts[q.correcta].classList.add('correct-answer');
+    opts[q.correcta].querySelector('.option-mark').textContent = '✓ Correcta';
+    if (!ok) {
+      opts[oi].classList.add('wrong-answer');
+      opts[oi].querySelector('.option-mark').textContent = '✗ Tu respuesta';
+    }
+    card.classList.add(ok ? 'correct' : 'incorrect');
+    var exp = $('#exp-' + qi);
+    exp.innerHTML = '<strong class="verdict">' + (ok ? '✓ ¡Correcto!' : '✗ Incorrecto') + '</strong>' + fmt(q.explicacion || '');
+    exp.classList.add('visible');
+    if (persist) { save(); updateProgress(); updateExamStatus(); }
+  }
+
+  function updateExamStatus() {
+    var done = Object.keys(state.answers).length, ok = 0, fails = [];
+    Object.keys(state.answers).forEach(function (k) {
+      if (state.answers[k] === QS[k].correcta) ok++; else fails.push(+k + 1);
+    });
+    var st = $('#examStatus'); if (!st) return;
+    st.innerHTML = 'Respondidas: <strong>' + done + '/' + QS.length + '</strong> · Aciertos: <strong>' + ok + '</strong>';
+    var box = $('#scoreBox');
+    if (done === QS.length) {
+      var pct = Math.round(ok / QS.length * 100);
+      $('#scoreNum').textContent = ok + ' / ' + QS.length;
+      $('#scoreLabel').textContent = pct + '% de aciertos';
+      var msg = $('#scoreMsg');
+      if (pct >= 90) { msg.className = 'score-msg hi'; msg.textContent = '⭐ Dominas el tema.'; }
+      else if (pct >= 70) { msg.className = 'score-msg mid'; msg.textContent = '👍 Vas bien: repasa las incorrectas.'; }
+      else { msg.className = 'score-msg lo'; msg.textContent = '📚 Repasa la guía y las flashcards, y vuelve a intentarlo.'; }
+      $('#scoreFails').textContent = fails.length ? 'Para repasar: preguntas ' + fails.join(', ') + '.' : 'Sin errores. ¡Excelente!';
+      box.classList.add('visible');
+    } else { box.classList.remove('visible'); }
+  }
+
+  /* ---------- Mapa mental ---------- */
+  function buildMapa() {
+    var m = D.mapa; if (!m) { $('#tab-mapa').innerHTML = '<div class="empty">Sin mapa mental.</div>'; return; }
+    var h = '<p class="tab-intro">Vista general del tema: cada rama es un bloque de la guía.</p><div class="mapa-container">';
+    h += '<div class="mapa-root-wrap"><div class="mapa-node-root">' + esc(m.raiz) + '</div></div><div class="mapa-stem"></div><div class="mapa-branches">';
+    (m.ramas || []).forEach(function (r, i) {
+      h += '<div class="mapa-branch branch-color-' + ((i % 6) + 1) + '"><div class="mapa-branch-header">' + esc(r.titulo) + '</div><div class="mapa-branch-body">' +
+        (r.hojas || []).map(function (l) { return '<div class="mapa-leaf">' + fmt(l) + '</div>'; }).join('') + '</div></div>';
+    });
+    h += '</div></div>';
+    $('#tab-mapa').innerHTML = h;
+  }
+
+  /* ---------- Resumen ---------- */
+  function buildResumen() {
+    var h = '<p class="tab-intro">Tabla de repaso: qué contiene cada sección, para qué sirve y su palabra clave.</p><h2 class="h2">Resumen ejecutivo</h2><div class="table-wrap"><table class="resumen-table"><thead><tr><th>Sección</th><th>Qué contiene</th><th>Para qué sirve</th><th>Palabra clave</th></tr></thead><tbody>';
+    (D.resumen || []).forEach(function (r) {
+      h += '<tr><td><strong>' + esc(r.seccion) + '</strong></td><td>' + fmt(r.contiene) + '</td><td>' + fmt(r.sirve) + '</td><td><span class="keyword-tag">' + esc(r.clave) + '</span></td></tr>';
+    });
+    h += '</tbody></table></div>';
+    if (D.cifras && D.cifras.length) {
+      h += '<h2 class="h2">Tabla de cifras: antes → propuesta</h2>' +
+        '<p class="table-note">Cuando el documento no indica el valor actual, la columna «Antes» refleja lo que el texto da a entender.</p>' +
+        '<div class="table-wrap"><table class="resumen-table"><thead><tr><th>Concepto</th><th>Antes</th><th>Propuesta</th></tr></thead><tbody>';
+      D.cifras.forEach(function (r) {
+        h += '<tr><td><strong>' + esc(r.concepto) + '</strong></td><td class="antes">' + fmt(r.antes) + '</td><td class="despues">' + fmt(r.despues) + '</td></tr>';
+      });
+      h += '</tbody></table></div>';
+    }
+    $('#tab-resumen').innerHTML = h;
+  }
+
+  /* ---------- Estudio rápido ---------- */
+  function buildRapido() {
+    var R = D.rapido || {};
+    var h = '<p class="tab-intro">El 20% que más rinde, más un plan para memorizarlo en 30 minutos.</p>';
+    if (R.nota) h += '<div class="label-critical">⭐ ' + fmt(R.nota) + '</div>';
+    h += '<div class="rapido-grid">';
+    (R.tarjetas || []).forEach(function (t) {
+      var k = 'k-neutral';
+      if (t.titulo.indexOf('🟣') === 0 || t.titulo.indexOf('⭐') === 0) k = 'k-purple';
+      else if (t.titulo.indexOf('🔵') === 0) k = 'k-blue';
+      else if (t.titulo.indexOf('🟠') === 0 || t.titulo.indexOf('🚨') === 0) k = 'k-orange';
+      h += '<div class="rapido-card ' + k + '"><div class="rapido-card-title">' + esc(t.titulo) + '</div><ul>' + (t.items || []).map(function (i) { return '<li>' + fmt(i) + '</li>'; }).join('') + '</ul></div>';
+    });
+    h += '</div>';
+    if (R.plan30 && R.plan30.length) {
+      h += '<h2 class="h2">⏱️ Plan de estudio de 30 minutos</h2><ol class="plan">' +
+        R.plan30.map(function (p) { return '<li><span class="min">' + esc(p.min) + '</span><span>' + fmt(p.accion) + '</span></li>'; }).join('') + '</ol>';
+    }
+    $('#tab-rapido').innerHTML = h;
+  }
+
+  /* ---------- Progreso global ---------- */
+  function updateProgress() {
+    var fc = CARDS.length ? state.cards.length / CARDS.length : 0;
+    var ex = QS.length ? Object.keys(state.answers).length / QS.length : 0;
+    var parts = (CARDS.length ? 1 : 0) + (QS.length ? 1 : 0);
+    var pct = parts ? Math.round(((fc + ex) / parts) * 100) : 0;
+    $('#globalProgress').style.width = pct + '%';
+    $('#progressText').textContent = pct + '%';
+    $('#progressBox').setAttribute('aria-valuenow', String(pct));
+    var fp = $('#fcProgress'); if (fp) fp.textContent = '✅ ' + state.cards.length + ' de ' + CARDS.length + ' dominadas';
+  }
+
+  /* ---------- Pestañas y teclado ---------- */
+  function initTabs() {
+    var btns = $$('.tab-btn'), secs = $$('.tab-content');
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        btns.forEach(function (b) { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
+        secs.forEach(function (s) { s.classList.remove('active'); });
+        btn.classList.add('active'); btn.setAttribute('aria-selected', 'true');
+        $('#tab-' + btn.dataset.tab).classList.add('active');
+        var nav = $('#tabsNav'); window.scrollTo({ top: nav.offsetTop, behavior: 'smooth' });
+      });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (!$('#tab-flashcards').classList.contains('active') || !CARDS.length) return;
+      var tag = (document.activeElement && document.activeElement.tagName) || '';
+      if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      if (e.key === 'ArrowRight') { move(1); }
+      else if (e.key === 'ArrowLeft') { move(-1); }
+    });
+  }
+
+  $('#resetAll').addEventListener('click', function () {
+    if (!confirm('¿Reiniciar todo tu progreso (flashcards y simulacro)?')) return;
+    state = { cards: [], answers: {} }; save();
+    pos = 0; onlyPending = false;
+    buildFlashcards(); buildExam(); updateProgress();
+  });
+
+  /* Altura real de la barra de pestañas, para que las barras pegajosas no se traslapen */
+  function setNavH() {
+    var n = $('#tabsNav');
+    if (n) document.documentElement.style.setProperty('--nav-h', n.offsetHeight + 'px');
+  }
+  window.addEventListener('resize', setNavH);
+
+  load();
+  setNavH();
+  renderHero(); renderGuia(); buildFlashcards(); buildExam(); buildMapa(); buildResumen(); buildRapido();
+  initTabs(); updateProgress();
+})();
+</script>
+</body>
+</html>
